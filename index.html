@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="CTG Regional Operating Landscape — BATB Chittagong distribution, competition intelligence, pricing and trade loyalty programme data.">
+<title>CTG Regional Operating Landscape — BATB Chittagong</title>
+<style>
+/* ─── Reset & Base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+:root{
+  --navy:#0C447C;--navy-lt:#E6F1FB;--navy-mid:#378ADD;
+  --teal:#0F6E56;--teal-lt:#E1F5EE;--teal-mid:#1D9E75;
+  --amber:#854F0B;--amber-lt:#FAEEDA;--amber-mid:#BA7517;
+  --coral:#993C1D;--coral-lt:#FAECE7;--coral-mid:#D85A30;
+  --txt1:#111827;--txt2:#6B7280;
+  --bg:#FFFFFF;--bg2:#F9FAFB;--bg3:#F3F4F6;
+  --bdr:#E5E7EB;--bdrs:#D1D5DB;
+  --r:6px;--rl:8px;
+  --sidebar-w:200px;
+  --topbar-h:52px;
+  --transition:0.15s ease;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  font-size:14px;
+  color:var(--txt1);
+  background:var(--bg3);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* ─── Accessibility ─────────────────────────────────────────────── */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;
+  margin:-1px;overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0
+}
+:focus-visible{outline:2px solid var(--navy-mid);outline-offset:2px;border-radius:2px}
+
+/* ─── Topbar ─────────────────────────────────────────────────────── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+  padding:0 16px;
+  height:var(--topbar-h);
+  border-bottom:1px solid var(--bdr);
+  background:var(--bg);
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.topbar-left{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-chip{
+  flex-shrink:0;
+  background:var(--navy);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:.07em;
+  padding:4px 9px;border-radius:4px;
+}
+.topbar-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-sub{font-size:11px;color:var(--txt2);white-space:nowrap}
+.topbar-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* Tags / filter pills */
+.tag{
+  font-size:11px;padding:4px 9px;border-radius:var(--r);
+  border:1px solid var(--bdr);color:var(--txt2);
+  cursor:pointer;background:var(--bg);
+  transition:background var(--transition),color var(--transition),border-color var(--transition);
+  -webkit-user-select:none;user-select:none;
+}
+.tag:hover{background:var(--bg2)}
+.tag.active{background:var(--navy-lt);color:var(--navy);border-color:var(--navy-mid);font-weight:500}
+.tag:focus-visible{outline:2px solid var(--navy-mid);outline-offset:2px}
+
+/* ─── Buttons ────────────────────────────────────────────────────── */
+.btn-sm{
+  font-size:12px;padding:5px 11px;border-radius:var(--r);
+  border:1px solid var(--bdrs);background:var(--bg);
+  cursor:pointer;color:var(--txt1);
+  display:inline-flex;align-items:center;gap:5px;
+  transition:background var(--transition),box-shadow var(--transition);
+  font-family:inherit;white-space:nowrap;
+}
+.btn-sm:hover{background:var(--bg2);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.btn-sm:active{background:var(--bg3)}
+.btn-sm.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-sm.primary:hover{background:#0a3a6b}
+
+/* Icon font via SVG data-URIs — no external CDN dependency */
+/* We use inline SVG icons rendered as background images */
+
+/* ─── Layout shell ───────────────────────────────────────────────── */
+.layout{
+  display:grid;
+  grid-template-columns:var(--sidebar-w) 1fr;
+  min-height:calc(100vh - var(--topbar-h));
+  background:var(--bg);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────── */
+.sidebar{
+  border-right:1px solid var(--bdr);
+  background:var(--bg2);
+  padding:10px 0 16px;
+  position:sticky;
+  top:var(--topbar-h);
+  height:calc(100vh - var(--topbar-h));
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.sidebar-section{
+  padding:12px 16px 4px;
+  font-size:10px;font-weight:600;letter-spacing:.09em;
+  color:var(--txt2);text-transform:uppercase;
+}
+.nav-item{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 16px;cursor:pointer;
+  font-size:13px;color:var(--txt1);
+  border-left:2px solid transparent;
+  transition:background var(--transition);
+  -webkit-user-select:none;user-select:none;
+}
+.nav-item:hover{background:var(--bg3)}
+.nav-item.active{
+  border-left-color:var(--navy-mid);
+  color:var(--navy);background:var(--navy-lt);font-weight:500;
+}
+.nav-icon{
+  width:16px;height:16px;flex-shrink:0;opacity:.6;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.nav-item.active .nav-icon{opacity:1}
+.nav-badge{
+  margin-left:auto;font-size:10px;padding:1px 6px;
+  border-radius:10px;background:var(--bg3);
+  border:1px solid var(--bdr);color:var(--txt2);
+}
+.nav-item.active .nav-badge{
+  background:var(--navy-lt);border-color:var(--navy-mid);color:var(--navy);
+}
+
+/* Hamburger toggle (mobile) */
+.menu-toggle{
+  display:none;
+  background:none;border:1px solid var(--bdr);border-radius:var(--r);
+  padding:6px 8px;cursor:pointer;color:var(--txt1);
+  align-items:center;justify-content:center;
+}
+.menu-toggle svg{display:block}
+
+/* ─── Main content ───────────────────────────────────────────────── */
+.main{overflow:hidden;min-width:0}
+.section-header{
+  padding:14px 20px 12px;
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:10px;flex-wrap:wrap;
+}
+.section-header-left h2{font-size:15px;font-weight:600;margin-bottom:2px}
+.section-header-left p{font-size:12px;color:var(--txt2)}
+.header-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ─── Section Tabs ───────────────────────────────────────────────── */
+.section-tabs{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--bdr);
+  padding:0 20px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.section-tabs::-webkit-scrollbar{display:none}
+.stab{
+  padding:9px 14px;font-size:12px;cursor:pointer;
+  border-bottom:2px solid transparent;color:var(--txt2);
+  margin-bottom:-1px;white-space:nowrap;
+  transition:color var(--transition),border-color var(--transition);
+  -webkit-user-select:none;user-select:none;
+}
+.stab:hover{color:var(--txt1)}
+.stab.active{color:var(--navy);border-bottom-color:var(--navy-mid);font-weight:500}
+
+/* ─── Content area ───────────────────────────────────────────────── */
+.content-area{padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+
+/* ─── KPI Grid ───────────────────────────────────────────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi-card{
+  background:var(--bg2);border-radius:var(--r);
+  padding:12px 14px;border:1px solid var(--bdr);
+}
+.kpi-label{font-size:11px;color:var(--txt2);margin-bottom:6px;font-weight:500;letter-spacing:.02em}
+.kpi-value{font-size:22px;font-weight:600;line-height:1;letter-spacing:-.5px}
+.kpi-sub{font-size:11px;color:var(--txt2);margin-top:5px;display:flex;align-items:center;gap:4px}
+.kpi-up{color:var(--teal)}
+.kpi-down{color:var(--coral-mid)}
+
+/* ─── Panel layout ───────────────────────────────────────────────── */
+.panel-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.panel{
+  background:var(--bg);border:1px solid var(--bdr);
+  border-radius:var(--rl);overflow:hidden;
+}
+.panel.wide{grid-column:1/-1}
+.panel-head{
+  padding:11px 16px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  flex-wrap:wrap;
+}
+.panel-head h3{font-size:13px;font-weight:600;min-width:0}
+.panel-head-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.select-xs{
+  font-size:11px;padding:4px 8px;border-radius:var(--r);
+  border:1px solid var(--bdrs);background:var(--bg2);
+  color:var(--txt1);cursor:pointer;font-family:inherit;
+  max-width:160px;
+}
+.select-xs:focus{outline:2px solid var(--navy-mid);outline-offset:1px}
+.panel-body{padding:12px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ─── Area table ─────────────────────────────────────────────────── */
+.area-table{width:100%;border-collapse:collapse;font-size:12px;min-width:320px}
+.area-table th{
+  text-align:left;padding:7px 8px;font-weight:600;font-size:11px;
+  color:var(--txt2);border-bottom:1px solid var(--bdr);letter-spacing:.03em;
+}
+.area-table td{padding:8px 8px;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.area-table tr:last-child td{border-bottom:none}
+.area-table tbody tr:hover td{background:var(--bg2)}
+
+/* Area pills */
+.area-pill{
+  display:inline-block;font-size:10px;padding:2px 8px;
+  border-radius:10px;font-weight:600;white-space:nowrap;
+}
+.area-pill.north{background:var(--navy-lt);color:var(--navy)}
+.area-pill.south{background:var(--teal-lt);color:var(--teal)}
+.area-pill.cumilla{background:var(--amber-lt);color:var(--amber)}
+.area-pill.feni{background:var(--coral-lt);color:var(--coral)}
+
+/* Bar */
+.bar-wrap{display:flex;align-items:center;gap:6px;min-width:80px}
+.bar-bg{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;min-width:40px}
+.bar-fill{height:100%;border-radius:3px;background:var(--navy-mid)}
+.bar-fill.teal{background:var(--teal-mid)}
+.bar-fill.amber{background:var(--amber-mid)}
+.bar-fill.coral{background:var(--coral-mid)}
+
+/* ─── Brand grid ─────────────────────────────────────────────────── */
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.brand-tile{border:1px solid var(--bdr);border-radius:var(--r);padding:9px 10px}
+.brand-tile-name{font-size:11px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand-tile-co{font-size:10px;color:var(--txt2);margin-bottom:6px}
+.brand-pct{font-size:13px;font-weight:600}
+.brand-pct.hi{color:var(--coral-mid)}
+.brand-pct.mid{color:var(--amber-mid)}
+.brand-pct.lo{color:var(--teal)}
+
+/* Manufacturer badges */
+.mfr-badge{
+  font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;
+  display:inline-block;white-space:nowrap;
+}
+.mfr-aktc{background:var(--amber-lt);color:var(--amber)}
+.mfr-jti{background:var(--teal-lt);color:var(--teal)}
+.mfr-pmi{background:var(--navy-lt);color:var(--navy)}
+
+/* ─── TLP / competitor rows ──────────────────────────────────────── */
+.tlp-list{display:flex;flex-direction:column;gap:0}
+.comp-row{
+  display:grid;
+  grid-template-columns:90px 1fr 70px 70px;
+  padding:8px 0;border-bottom:1px solid var(--bdr);
+  align-items:center;gap:8px;font-size:12px;
+}
+.comp-row:last-child{border-bottom:none}
+.comp-row-head{font-weight:600;font-size:10px;color:var(--txt2);letter-spacing:.04em}
+
+/* ─── Price table ────────────────────────────────────────────────── */
+.price-table{width:100%;border-collapse:collapse;font-size:12px;min-width:340px}
+.price-table th{
+  text-align:right;padding:7px 8px;
+  font-size:10px;font-weight:600;color:var(--txt2);
+  border-bottom:1px solid var(--bdr);letter-spacing:.03em;
+}
+.price-table th:first-child{text-align:left}
+.price-table td{padding:8px 8px;border-bottom:1px solid var(--bdr);text-align:right;vertical-align:middle}
+.price-table td:first-child{text-align:left;font-weight:500}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tbody tr:hover td{background:var(--bg2)}
+.profit-hi{color:var(--teal);font-weight:600}
+.profit-lo{color:var(--coral-mid);font-weight:600}
+
+/* ─── YLP achievement grid ───────────────────────────────────────── */
+.ylp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ylp-month{
+  border:1px solid var(--bdr);border-radius:var(--r);
+  padding:9px 11px;display:flex;flex-direction:column;gap:5px;
+}
+.ylp-month-label{font-size:10px;color:var(--txt2);font-weight:500}
+.ylp-month-pct{font-size:16px;font-weight:600}
+.ylp-pbar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.ylp-pfill{height:100%;border-radius:2px;background:var(--navy-mid);transition:width .6s ease}
+.ylp-pfill.good{background:var(--teal-mid)}
+.ylp-pfill.warn{background:var(--amber-mid)}
+
+/* ─── Map placeholder ────────────────────────────────────────────── */
+.map-placeholder{
+  height:170px;background:var(--bg2);border-radius:var(--r);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;border:1px dashed var(--bdrs);color:var(--txt2);
+}
+.map-placeholder svg{width:28px;height:28px;opacity:.35}
+.map-placeholder p{font-size:12px;text-align:center;padding:0 16px}
+
+/* ─── Activity log ───────────────────────────────────────────────── */
+.log-list{display:flex;flex-direction:column}
+.log-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--bdr);font-size:12px;
+}
+.log-row:last-child{border-bottom:none}
+.log-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.log-dot.aktc{background:var(--amber-mid)}
+.log-dot.jti{background:var(--teal-mid)}
+.log-dot.pmi{background:var(--navy-mid)}
+.log-body{flex:1;min-width:0}
+.log-body b{font-weight:600}
+.log-meta{font-size:11px;color:var(--txt2);margin-top:3px}
+.log-more{
+  padding:10px 0 2px;text-align:center;
+}
+
+/* ─── Status bar ─────────────────────────────────────────────────── */
+.status-row{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:var(--txt2);
+  padding:8px 20px;border-top:1px solid var(--bdr);
+  flex-wrap:wrap;
+}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--teal-mid);flex-shrink:0}
+
+/* ─── Sidebar overlay (mobile) ───────────────────────────────────── */
+.sidebar-overlay{
+  display:none;
+  position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:150;
+  opacity:0;transition:opacity .2s ease;
+}
+.sidebar-overlay.visible{opacity:1}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:720px){
+  :root{--sidebar-w:220px}
+  .menu-toggle{display:inline-flex}
+  .layout{grid-template-columns:1fr}
+
+  .sidebar{
+    position:fixed;
+    top:0;left:0;
+    height:100vh;
+    z-index:200;
+    transform:translateX(-100%);
+    transition:transform .22s ease;
+    padding-top:calc(var(--topbar-h) + 8px);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:block}
+
+  .topbar{height:auto;padding:10px 14px}
+  .topbar-right .tag{display:none}
+  .topbar-right .tag.active{display:inline-block}
+  .topbar-title{font-size:13px}
+  .topbar-sub{display:none}
+
+  .section-header{padding:12px 14px 10px}
+  .section-tabs{padding:0 14px}
+  .content-area{padding:12px 14px}
+
+  .panel-row{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .brand-grid{grid-template-columns:repeat(2,1fr)}
+
+  .header-actions .btn-sm:not(:first-child){display:none}
+}
+
+@media(max-width:420px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-value{font-size:18px}
+  .ylp-grid{grid-template-columns:1fr 1fr}
+  .comp-row{grid-template-columns:70px 1fr 55px 55px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
+/* ─── Print ──────────────────────────────────────────────────────── */
+@media print{
+  .topbar,.sidebar,.menu-toggle,.sidebar-overlay{display:none!important}
+  .layout{grid-template-columns:1fr}
+  .panel-row{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- Skip nav -->
+<a class="sr-only" href="#main-content">Skip to main content</a>
+<h1 class="sr-only">CTG Regional Operating Landscape — BATB Chittagong Region dashboard covering distribution, competition intelligence, pricing, and trade loyalty programme data.</h1>
+
+<!-- ── Sidebar overlay (mobile tap-to-close) ── -->
+<div class="sidebar-overlay" id="sidebarOverlay" role="presentation" aria-hidden="true"></div>
+
+<!-- ════════════════════ TOPBAR ════════════════════ -->
+<header class="topbar" role="banner">
+  <div class="topbar-left">
+    <!-- Hamburger (mobile only) -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <rect x="2" y="4" width="14" height="1.5" rx=".75" fill="currentColor"/>
+        <rect x="2" y="8.25" width="14" height="1.5" rx=".75" fill="currentColor"/>
+        <rect x="2" y="12.5" width="14" height="1.5" rx=".75" fill="currentColor"/>
+      </svg>
+    </button>
+    <span class="brand-chip">BATB</span>
+    <div>
+      <div class="topbar-title">CTG Regional Operating Landscape</div>
+      <div class="topbar-sub">Chittagong Region · Post-RTM · April 2026</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="tag" data-area="ctg-north" aria-pressed="false">CTG North</button>
+    <button class="tag active" data-area="all" aria-pressed="true">All Areas</button>
+    <button class="tag" data-area="cumilla" aria-pressed="false">Cumilla</button>
+    <button class="tag" data-area="feni" aria-pressed="false">Feni</button>
+    <button class="btn-sm" id="exportBtn" aria-label="Export data">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v7M3.5 5l3 3 3-3M1 9.5V12h11V9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Export
+    </button>
+    <button class="btn-sm primary" id="syncBtn" aria-label="Sync data">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M11 2.5A5.5 5.5 0 1 0 12 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M11 2.5V5.5H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Sync
+    </button>
+  </div>
+</header>
+
+<!-- ════════════════════ LAYOUT ════════════════════ -->
+<div class="layout">
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar" aria-label="Dashboard navigation">
+    <div class="sidebar-section">Distribution</div>
+    <div class="nav-item active" role="button" tabindex="0" data-section="overview" aria-current="page">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      Overview
+      <span class="nav-badge">22</span>
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="dh-locations">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.49-2.01-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      DH Locations
+      <span class="nav-badge">156</span>
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="remote-points">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h2m8 0h2M8 2v2m0 8v2M4.2 4.2l1.4 1.4m4.8 4.8 1.4 1.4M4.2 11.8l1.4-1.4m4.8-4.8 1.4-1.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      Remote Points
+    </div>
+    <div class="sidebar-section">Competition</div>
+    <div class="nav-item" role="button" tabindex="0" data-section="ads-analysis">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      ADS Analysis
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="carrying-outlets">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="7" width="13" height="7.5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 7V5a3.5 3.5 0 0 1 7 0v2" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      Carrying Outlets
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="activity-grid">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </span>
+      Activity Grid
+      <span class="nav-badge">572</span>
+    </div>
+    <div class="sidebar-section">Trade Loyalty</div>
+    <div class="nav-item" role="button" tabindex="0" data-section="tlp-analysis">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5 9.6 6H14l-3.5 2.5 1.3 4.5L8 10.5l-3.8 2.5L5.5 8.5 2 6h4.4L8 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </span>
+      TLP Analysis
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="ylp-2026">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 9l2.5-3L10 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      YLP '26
+      <span class="nav-badge">3.5k</span>
+    </div>
+    <div class="sidebar-section">Planning</div>
+    <div class="nav-item" role="button" tabindex="0" data-section="pricing">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8.5 1.5h4v4l-6 6-4-4 6-6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><circle cx="10.5" cy="5.5" r="1" fill="currentColor"/></svg>
+      </span>
+      Pricing 2026
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="volume-base">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      Volume Base
+    </div>
+    <div class="nav-item" role="button" tabindex="0" data-section="fact-sheet">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </span>
+      BAT Fact Sheet
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main class="main" id="main-content">
+
+    <div class="section-header">
+      <div class="section-header-left">
+        <h2>Distribution overview</h2>
+        <p>BAT vs competitor network coverage · all four areas · April 2026</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm" aria-label="Filter data">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M1.5 2.5h10l-4 5v4l-2-1V7.5l-4-5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          Filter
+        </button>
+        <button class="btn-sm" aria-label="Table view">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><rect x="1" y="1" width="11" height="11" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1 4.5h11M1 8h11M5 4.5v7" stroke="currentColor" stroke-width="1.2"/></svg>
+          Table
+        </button>
+        <button class="btn-sm" aria-label="Map view">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M1 10.5V2.5l3.5 1.5 4-2 3.5 1.5v8l-3.5-1.5-4 2L1 10.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M4.5 4v7M8.5 2.5v7" stroke="currentColor" stroke-width="1.2"/></svg>
+          Map
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="section-tabs" role="tablist" aria-label="View options">
+      <button class="stab active" role="tab" aria-selected="true" aria-controls="tab-panel-summary" id="tab-summary">Summary</button>
+      <button class="stab" role="tab" aria-selected="false" aria-controls="tab-panel-by-company" id="tab-by-company">By company</button>
+      <button class="stab" role="tab" aria-selected="false" aria-controls="tab-panel-by-point" id="tab-by-point">By point</button>
+      <button class="stab" role="tab" aria-selected="false" aria-controls="tab-panel-logistics" id="tab-logistics">Logistics</button>
+    </div>
+
+    <!-- Tab panels -->
+    <div id="tab-panel-summary" role="tabpanel" aria-labelledby="tab-summary">
+    <div class="content-area">
+
+      <!-- KPIs -->
+      <div class="kpi-grid" role="list" aria-label="Key performance indicators">
+        <div class="kpi-card" role="listitem">
+          <div class="kpi-label">Total DSS outlets</div>
+          <div class="kpi-value">121,741</div>
+          <div class="kpi-sub">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 8l3-3 2 2 3-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="kpi-up">Chittagong total</span>
+          </div>
+        </div>
+        <div class="kpi-card" role="listitem">
+          <div class="kpi-label">DSS route count</div>
+          <div class="kpi-value">893</div>
+          <div class="kpi-sub">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9c1-2 2-4 4-4s3 2 4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            1,767 sections
+          </div>
+        </div>
+        <div class="kpi-card" role="listitem">
+          <div class="kpi-label">BAT distributors</div>
+          <div class="kpi-value">8</div>
+          <div class="kpi-sub">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="1" y="4" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 4V3a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="7" r="1" fill="currentColor"/></svg>
+            969 logistics
+          </div>
+        </div>
+        <div class="kpi-card" role="listitem">
+          <div class="kpi-label">Agent distributors</div>
+          <div class="kpi-value">13</div>
+          <div class="kpi-sub">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v3l2 1M2 6a4 4 0 1 0 8 0 4 4 0 0 0-8 0z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            43 routes
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="panel-row">
+
+        <!-- Area breakdown table -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Area breakdown — BAT coverage</h3>
+            <div class="panel-head-right">
+              <select class="select-xs" aria-label="Metric selector">
+                <option>DSS outlets</option>
+                <option>Routes</option>
+                <option>Sections</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table class="area-table">
+              <thead>
+                <tr>
+                  <th scope="col">Area</th>
+                  <th scope="col">Distributors</th>
+                  <th scope="col">Routes</th>
+                  <th scope="col">Outlets</th>
+                  <th scope="col">Share</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="area-pill north">CTG North</span></td>
+                  <td>1</td><td>224</td><td>30,958</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="CTG North share 25%">
+                        <div class="bar-fill" style="width:64%"></div>
+                      </div>
+                      <span>25%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="area-pill south">CTG South</span></td>
+                  <td>2</td><td>210</td><td>30,149</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="CTG South share 25%">
+                        <div class="bar-fill teal" style="width:62%"></div>
+                      </div>
+                      <span>25%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="area-pill cumilla">Cumilla</span></td>
+                  <td>2</td><td>230</td><td>29,489</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg" role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100" aria-label="Cumilla share 24%">
+                        <div class="bar-fill amber" style="width:61%"></div>
+                      </div>
+                      <span>24%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="area-pill feni">Feni</span></td>
+                  <td>3</td><td>229</td><td>31,145</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg" role="progressbar" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100" aria-label="Feni share 26%">
+                        <div class="bar-fill coral" style="width:64%"></div>
+                      </div>
+                      <span>26%</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- DH location map -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>DH location map</h3>
+            <div class="panel-head-right">
+              <button class="btn-sm" aria-label="Expand map to full screen">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.5 1.5H10.5V4.5M4.5 10.5H1.5V7.5M10.5 1.5L7 5M1.5 10.5L5 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Expand
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="map-placeholder" role="img" aria-label="Map of 156 distribution house GPS coordinates — load map layer to view">
+              <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M14 2C10.13 2 7 5.13 7 9c0 5.25 7 17 7 17s7-11.75 7-17c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="14" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              <p>GPS coordinates loaded for 156 distribution houses</p>
+              <button class="btn-sm">
+                Load map layer
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px">
+              <div class="kpi-card" style="padding:9px 11px">
+                <div class="kpi-label">BATB points</div>
+                <div class="kpi-value" style="font-size:18px">156</div>
+              </div>
+              <div class="kpi-card" style="padding:9px 11px">
+                <div class="kpi-label">Competitor DHs</div>
+                <div class="kpi-value" style="font-size:18px">3 cos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /row 1 -->
+
+      <!-- Row 2 -->
+      <div class="panel-row">
+
+        <!-- Top competitor brands -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Top competitor brands — carrying outlet %</h3>
+            <div class="panel-head-right">
+              <select class="select-xs" aria-label="Area filter">
+                <option>All areas</option>
+                <option>CTG North</option>
+                <option>CTG South</option>
+                <option>Cumilla</option>
+                <option>Feni</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="brand-grid">
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="Marise">Marise</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-aktc">AKTC</span></div>
+                <div class="brand-pct hi">151,730 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="Navy">Navy</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-jti">JTI</span></div>
+                <div class="brand-pct mid">62,042 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="M. Black Diamond">M. Black Diamond</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-aktc">AKTC</span></div>
+                <div class="brand-pct mid">81,652 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="LD Fresh">LD Fresh</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-jti">JTI</span></div>
+                <div class="brand-pct lo">63,098 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="Camel">Camel</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-jti">JTI</span></div>
+                <div class="brand-pct mid">45,479 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+              <div class="brand-tile">
+                <div class="brand-tile-name" title="LD Red">LD Red</div>
+                <div class="brand-tile-co"><span class="mfr-badge mfr-jti">JTI</span></div>
+                <div class="brand-pct lo">50,462 <span style="font-size:10px;font-weight:400;color:var(--txt2)">outlets</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TLP concentration -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>TLP concentration — competitor vs BAT partner</h3>
+            <div class="panel-head-right">
+              <select class="select-xs" aria-label="Sort order">
+                <option>Highest ratio</option>
+                <option>By area</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="tlp-list">
+              <div class="comp-row comp-row-head" style="grid-template-columns:90px 1fr 70px 70px">
+                <span>Programme</span>
+                <span>Penetration vs BAT DSS</span>
+                <span style="text-align:right">Points</span>
+                <span style="text-align:right">Status</span>
+              </div>
+              <div class="comp-row" style="grid-template-columns:90px 1fr 70px 70px">
+                <span><span class="mfr-badge mfr-aktc">Astha</span></span>
+                <div class="bar-bg" style="height:6px" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Astha penetration 78%"><div class="bar-fill amber" style="width:78%"></div></div>
+                <span style="text-align:right;font-size:12px">27 pts</span>
+                <span style="text-align:right;color:var(--coral-mid);font-size:11px">⚠ Higher</span>
+              </div>
+              <div class="comp-row" style="grid-template-columns:90px 1fr 70px 70px">
+                <span><span class="mfr-badge mfr-jti">Bandhan</span></span>
+                <div class="bar-bg" style="height:6px" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" aria-label="Bandhan penetration 18%"><div class="bar-fill teal" style="width:18%"></div></div>
+                <span style="text-align:right;font-size:12px">2 pts</span>
+                <span style="text-align:right;color:var(--amber-mid);font-size:11px">Monitor</span>
+              </div>
+              <div class="comp-row" style="grid-template-columns:90px 1fr 70px 70px">
+                <span><span class="mfr-badge mfr-pmi">Retail Hero</span></span>
+                <div class="bar-bg" style="height:6px" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100" aria-label="Retail Hero penetration 4%"><div class="bar-fill" style="width:4%"></div></div>
+                <span style="text-align:right;font-size:12px">0 pts</span>
+                <span style="text-align:right;color:var(--teal);font-size:11px">✓ Below</span>
+              </div>
+              <div class="comp-row" style="grid-template-columns:90px 1fr 70px 70px;border-bottom:none;padding-top:10px">
+                <span style="font-size:10px;color:var(--txt2)">Key area</span>
+                <span style="font-size:11px;color:var(--txt2)">Astha concentrated in Hill Tracts &amp; sea-based markets</span>
+                <span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /row 2 -->
+
+      <!-- Row 3 -->
+      <div class="panel-row">
+
+        <!-- Pricing table -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Pricing — BAT portfolio (June 2025)</h3>
+            <div class="panel-head-right">
+              <select class="select-xs" aria-label="SKU filter">
+                <option>20HL only</option>
+                <option>All SKUs</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Stick (BDT)</th>
+                  <th scope="col">Dist. comm.</th>
+                  <th scope="col">Retailer profit</th>
+                  <th scope="col">Margin %</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>B&amp;H</td>
+                  <td>23</td><td>242.5</td><td>40.02</td>
+                  <td class="profit-hi">1.17%</td>
+                </tr>
+                <tr>
+                  <td>JPGL</td>
+                  <td>18</td><td>155.2</td><td>40.02</td>
+                  <td class="profit-hi">0.98%</td>
+                </tr>
+                <tr>
+                  <td>Lucky Strike</td>
+                  <td>12</td><td>112.52</td><td>24.02</td>
+                  <td class="profit-lo">1.05%</td>
+                </tr>
+                <tr>
+                  <td>Royals</td>
+                  <td>7</td><td>65.96</td><td>14.02</td>
+                  <td class="profit-lo">1.06%</td>
+                </tr>
+                <tr>
+                  <td>Derby</td>
+                  <td>8</td><td>60.14</td><td>16.02</td>
+                  <td>0.84%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- YLP achievement -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>YLP '26 — retailer achievement</h3>
+            <div class="panel-head-right">
+              <select class="select-xs" aria-label="Territory filter">
+                <option>All territories</option>
+                <option>Cox's Bazar</option>
+                <option>Bayezid</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;flex-wrap:wrap;gap:4px">
+              <span style="font-size:11px;color:var(--txt2)">3,497 enrolled retailers · Jan – Jun 2026</span>
+              <span style="font-size:18px;font-weight:600">44.7% <span style="font-size:12px;font-weight:400;color:var(--txt2)">avg</span></span>
+            </div>
+            <div class="ylp-grid">
+              <div class="ylp-month">
+                <div class="ylp-month-label">January</div>
+                <div class="ylp-month-pct">75%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill good" style="width:75%"></div></div>
+              </div>
+              <div class="ylp-month">
+                <div class="ylp-month-label">February</div>
+                <div class="ylp-month-pct">50%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill" style="width:50%"></div></div>
+              </div>
+              <div class="ylp-month">
+                <div class="ylp-month-label">March</div>
+                <div class="ylp-month-pct">50%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill" style="width:50%"></div></div>
+              </div>
+              <div class="ylp-month">
+                <div class="ylp-month-label">April</div>
+                <div class="ylp-month-pct">17%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill warn" style="width:17%"></div></div>
+              </div>
+              <div class="ylp-month">
+                <div class="ylp-month-label">May</div>
+                <div class="ylp-month-pct">17%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill warn" style="width:17%"></div></div>
+              </div>
+              <div class="ylp-month">
+                <div class="ylp-month-label">June</div>
+                <div class="ylp-month-pct">0%</div>
+                <div class="ylp-pbar"><div class="ylp-pfill" style="width:0%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /row 3 -->
+
+      <!-- Full-width activity log -->
+      <div class="panel wide">
+        <div class="panel-head">
+          <h3>Competitor activity log — recent entries</h3>
+          <div class="panel-head-right">
+            <select class="select-xs" id="logMfrFilter" aria-label="Filter by manufacturer">
+              <option value="">All manufacturers</option>
+              <option value="AKTC">AKTC</option>
+              <option value="JTI">JTI</option>
+              <option value="PMI">PMI</option>
+            </select>
+            <select class="select-xs" id="logTypeFilter" aria-label="Filter by activity type">
+              <option value="">All activities</option>
+              <option value="YLP">YLP</option>
+              <option value="Advocacy">Advocacy</option>
+              <option value="Discounting">Discounting</option>
+            </select>
+            <button class="btn-sm" id="logSearchBtn" aria-label="Search activity log">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 8l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="log-list" id="logList" aria-live="polite" aria-label="Activity log entries">
+            <div class="log-row" data-mfr="AKTC" data-type="YLP">
+              <div class="log-dot aktc" aria-hidden="true"></div>
+              <div class="log-body">
+                <span><b>AKTC · Astha YLP</b> — Quarterly loyalty programme across CTG Region (excl. Cumilla-1). Sales target 70 pts, memo 20 pts, POSM 10 pts.</span>
+                <div class="log-meta">Jan – Mar 2023 · CTG North, CTG South, Feni · 4 areas · 6,219 scope outlets</div>
+              </div>
+              <span class="mfr-badge mfr-aktc" style="flex-shrink:0;align-self:flex-start">AKTC</span>
+            </div>
+            <div class="log-row" data-mfr="JTI" data-type="YLP">
+              <div class="log-dot jti" aria-hidden="true"></div>
+              <div class="log-body">
+                <span><b>JTI · Bandhan Q1</b> — Focus brand: Navy Option / Camel. 95% monthly volume target, 100% block target, full merchandising retention.</span>
+                <div class="log-meta">Jan – Apr 2023 · CTG Region (all territories) · Contact target: 120/month</div>
+              </div>
+              <span class="mfr-badge mfr-jti" style="flex-shrink:0;align-self:flex-start">JTI</span>
+            </div>
+            <div class="log-row" data-mfr="PMI" data-type="Advocacy">
+              <div class="log-dot pmi" aria-hidden="true"></div>
+              <div class="log-body">
+                <span><b>PMI · Marlboro Retail Hero</b> — 3-tier retailer incentive (Cat A BDT 700, B BDT 500, C BDT 300). Lifting targets on Marlboro Gold + Advance.</span>
+                <div class="log-meta">Jan – Apr 2023 · Bayezid, CTG Port, Sitakunda, Kotwali, Cumilla 1 &amp; 2 · 236 outlets</div>
+              </div>
+              <span class="mfr-badge mfr-pmi" style="flex-shrink:0;align-self:flex-start">PMI</span>
+            </div>
+            <div class="log-row" data-mfr="JTI" data-type="Discounting">
+              <div class="log-dot jti" aria-hidden="true"></div>
+              <div class="log-body">
+                <span><b>JTI · Navy discounting</b> — BDT 99 discount per outer (200 sticks). Blanket application across all CTG DSS.</span>
+                <div class="log-meta">Jan 2023 · CTG Region (all DSS)</div>
+              </div>
+              <span class="mfr-badge mfr-jti" style="flex-shrink:0;align-self:flex-start">JTI</span>
+            </div>
+          </div>
+          <div class="log-more">
+            <button class="btn-sm" id="loadMoreBtn" aria-label="Load more activity log entries" style="margin:0 auto">
+              Load more entries (568 remaining)
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+    </div><!-- /tab-panel-summary -->
+
+    <!-- Other tab panels (shown/hidden by JS) -->
+    <div id="tab-panel-by-company" role="tabpanel" aria-labelledby="tab-by-company" hidden>
+      <div class="content-area">
+        <div class="panel wide">
+          <div class="panel-head"><h3>Manufacturer-level breakdown</h3></div>
+          <div class="panel-body">
+            <table class="area-table" style="min-width:380px">
+              <thead>
+                <tr>
+                  <th scope="col">Manufacturer</th>
+                  <th scope="col">DHs (CTG)</th>
+                  <th scope="col">Routes</th>
+                  <th scope="col">Key brands</th>
+                  <th scope="col">Reach</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="mfr-badge mfr-aktc">AKTC</span></td>
+                  <td>42</td><td>310</td>
+                  <td>Marise, M. Black Diamond</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg"><div class="bar-fill amber" style="width:88%"></div></div>
+                      <span>88%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="mfr-badge mfr-jti">JTI</span></td>
+                  <td>27</td><td>220</td>
+                  <td>Navy, LD Fresh, Camel, LD Red</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg"><div class="bar-fill teal" style="width:62%"></div></div>
+                      <span>62%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="mfr-badge mfr-pmi">PMI</span></td>
+                  <td>18</td><td>140</td>
+                  <td>Marlboro Gold, Marlboro Advance</td>
+                  <td>
+                    <div class="bar-wrap">
+                      <div class="bar-bg"><div class="bar-fill" style="width:38%"></div></div>
+                      <span>38%</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-panel-by-point" role="tabpanel" aria-labelledby="tab-by-point" hidden>
+      <div class="content-area">
+        <div class="panel wide">
+          <div class="panel-head"><h3>Distribution point summary</h3></div>
+          <div class="panel-body">
+            <table class="area-table" style="min-width:380px">
+              <thead>
+                <tr>
+                  <th scope="col">Territory</th>
+                  <th scope="col">DH code</th>
+                  <th scope="col">Sections</th>
+                  <th scope="col">Outlets</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="area-pill north">CTG North</span></td><td>CTG-N-01</td><td>112</td><td>7,840</td><td><span style="color:var(--teal);font-weight:600">Active</span></td></tr>
+                <tr><td><span class="area-pill north">CTG North</span></td><td>CTG-N-02</td><td>98</td><td>7,210</td><td><span style="color:var(--teal);font-weight:600">Active</span></td></tr>
+                <tr><td><span class="area-pill south">CTG South</span></td><td>CTG-S-01</td><td>105</td><td>7,560</td><td><span style="color:var(--teal);font-weight:600">Active</span></td></tr>
+                <tr><td><span class="area-pill south">CTG South</span></td><td>CTG-S-02</td><td>89</td><td>6,930</td><td><span style="color:var(--teal);font-weight:600">Active</span></td></tr>
+                <tr><td><span class="area-pill cumilla">Cumilla</span></td><td>CML-01</td><td>118</td><td>8,100</td><td><span style="color:var(--amber-mid);font-weight:600">Review</span></td></tr>
+                <tr><td><span class="area-pill feni">Feni</span></td><td>FNI-01</td><td>127</td><td>8,540</td><td><span style="color:var(--teal);font-weight:600">Active</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-panel-logistics" role="tabpanel" aria-labelledby="tab-logistics" hidden>
+      <div class="content-area">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Total vehicles</div>
+            <div class="kpi-value">969</div>
+            <div class="kpi-sub">All types</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Delivery frequency</div>
+            <div class="kpi-value">6×/wk</div>
+            <div class="kpi-sub">Urban routes</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Remote coverage</div>
+            <div class="kpi-value">2×/wk</div>
+            <div class="kpi-sub">Hill / coastal</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Avg route length</div>
+            <div class="kpi-value">34 km</div>
+            <div class="kpi-sub">Per section</div>
+          </div>
+        </div>
+        <div class="panel wide">
+          <div class="panel-head"><h3>Logistics notes</h3></div>
+          <div class="panel-body" style="font-size:13px;line-height:1.7;color:var(--txt2)">
+            969 delivery logistics vehicles serve 893 DSS routes across all four areas. Remote point coverage for Hill Tracts &amp; coastal areas runs on a reduced 2× weekly schedule due to access constraints. Route consolidation review scheduled Q3 2026.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-row" role="status" aria-live="polite">
+      <div class="status-dot" aria-hidden="true"></div>
+      <span>Data synced from 22-sheet workbook · 3,497 retailers · 572 competitor activity records · Prices effective 13 Jun 2025</span>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── Sidebar toggle (mobile) ── */
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', function() {
+    if (sidebar.classList.contains('open')) closeSidebar();
+    else openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSidebar();
+  });
+
+  /* ── Nav item active state ── */
+  var navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+      navItems.forEach(function(n) {
+        n.classList.remove('active');
+        n.removeAttribute('aria-current');
+      });
+      item.classList.add('active');
+      item.setAttribute('aria-current', 'page');
+      if (window.innerWidth <= 720) closeSidebar();
+    });
+    item.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
+    });
+  });
+
+  /* ── Area filter tags ── */
+  var tags = document.querySelectorAll('.tag[data-area]');
+  tags.forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      tags.forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-pressed', 'false');
+      });
+      tag.classList.add('active');
+      tag.setAttribute('aria-pressed', 'true');
+    });
+    tag.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        tag.click();
+      }
+    });
+  });
+
+  /* ── Section tabs ── */
+  var tabs = document.querySelectorAll('.stab');
+  var panels = {
+    'tab-summary': 'tab-panel-summary',
+    'tab-by-company': 'tab-panel-by-company',
+    'tab-by-point': 'tab-panel-by-point',
+    'tab-logistics': 'tab-panel-logistics'
+  };
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      Object.keys(panels).forEach(function(key) {
+        var panel = document.getElementById(panels[key]);
+        if (panel) panel.hidden = true;
+      });
+      var target = panels[tab.id];
+      if (target) {
+        var targetPanel = document.getElementById(target);
+        if (targetPanel) targetPanel.hidden = false;
+      }
+    });
+    tab.addEventListener('keydown', function(e) {
+      var idx = Array.prototype.indexOf.call(tabs, tab);
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        tabs[(idx + 1) % tabs.length].focus();
+        tabs[(idx + 1) % tabs.length].click();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        tabs[(idx - 1 + tabs.length) % tabs.length].focus();
+        tabs[(idx - 1 + tabs.length) % tabs.length].click();
+      }
+    });
+  });
+
+  /* ── Activity log filtering ── */
+  var logList = document.getElementById('logList');
+  var logMfr = document.getElementById('logMfrFilter');
+  var logType = document.getElementById('logTypeFilter');
+  var logSearchBtn = document.getElementById('logSearchBtn');
+
+  function filterLog() {
+    var mfr = logMfr ? logMfr.value : '';
+    var type = logType ? logType.value : '';
+    var rows = logList ? logList.querySelectorAll('.log-row') : [];
+    var visible = 0;
+    rows.forEach(function(row) {
+      var rowMfr = row.getAttribute('data-mfr') || '';
+      var rowType = row.getAttribute('data-type') || '';
+      var show = (!mfr || rowMfr === mfr) && (!type || rowType === type);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    // Announce to screen readers
+    if (logList) logList.setAttribute('aria-label', 'Activity log entries — ' + visible + ' shown');
+  }
+
+  if (logSearchBtn) logSearchBtn.addEventListener('click', filterLog);
+  if (logMfr) logMfr.addEventListener('change', filterLog);
+  if (logType) logType.addEventListener('change', filterLog);
+
+  /* ── Load more entries (stub) ── */
+  var loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.textContent = 'Loading…';
+      setTimeout(function() {
+        loadMoreBtn.textContent = 'No further entries in demo';
+        loadMoreBtn.disabled = true;
+      }, 800);
+    });
+  }
+
+  /* ── Export button (stub) ── */
+  var exportBtn = document.getElementById('exportBtn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', function() {
+      var info = 'CTG Regional Operating Landscape\nBATB Chittagong · April 2026\n\nExport feature: integrate with your data pipeline for CSV/PDF output.';
+      if (window.alert) alert(info);
+    });
+  }
+
+  /* ── Sync button (stub) ── */
+  var syncBtn = document.getElementById('syncBtn');
+  if (syncBtn) {
+    syncBtn.addEventListener('click', function() {
+      var original = syncBtn.innerHTML;
+      syncBtn.disabled = true;
+      syncBtn.innerHTML = 'Syncing…';
+      setTimeout(function() {
+        syncBtn.innerHTML = original;
+        syncBtn.disabled = false;
+      }, 1200);
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
