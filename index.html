@@ -358,6 +358,16 @@
   .nav-btn span{font-size:9px;font-weight:600;white-space:nowrap;}
   .nav-btn.active{color:var(--blue);}
 
+  /* ── Mobile portrait fix: bottom nav scrolls horizontally so no tab is cut off ── */
+  @media (max-width:699px){
+    .bottom-nav{
+      overflow-x:auto;justify-content:flex-start;
+      -ms-overflow-style:none;scrollbar-width:none;
+    }
+    .bottom-nav::-webkit-scrollbar{display:none;}
+    .nav-btn{flex:0 0 auto;min-width:70px;padding:6px 10px;}
+  }
+
   /* ── Territory filter row: wrap on laptop widths so nothing is clipped ── */
   @media (min-width:700px){
     .filter-row{flex-wrap:wrap;overflow-x:visible;padding-bottom:0;}
