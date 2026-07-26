@@ -23,20 +23,65 @@
     --red:#ff453a;
     --silver:#c0c0c0;
     --platinum:#b5e0ff;
+    --overlay-06:rgba(255,255,255,0.06);
+    --overlay-08:rgba(255,255,255,0.08);
+    --overlay-14:rgba(255,255,255,0.14);
+    --topbar-bg:rgba(0,0,0,0.88);
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,sans-serif;
+  }
+
+  /* ── Light mode overrides ── */
+  body.light{
+    --bg:#f5f5f7;
+    --panel:#ffffff;
+    --panel-2:#eef0f3;
+    --border:rgba(0,0,0,0.08);
+    --border-2:rgba(0,0,0,0.14);
+    --text:#1c1c1e;
+    --text-dim:#5b5b60;
+    --text-faint:#7a7a80;
+    --overlay-06:rgba(0,0,0,0.05);
+    --overlay-08:rgba(0,0,0,0.07);
+    --overlay-14:rgba(0,0,0,0.12);
+    --topbar-bg:rgba(255,255,255,0.88);
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{background:var(--bg);color:var(--text);}
+  body{transition:background 0.25s ease, color 0.25s ease;}
+  .topbar-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
   body{
     font-size:14px;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;
-    padding-bottom:calc(74px + env(safe-area-inset-bottom));
-    max-width:520px;margin:0 auto;min-height:100vh;
+    display:flex;align-items:stretch;min-height:100vh;
   }
+  .app-main{
+    flex:1;min-width:0;max-width:520px;margin:0 auto;min-height:100vh;
+    padding-bottom:24px;
+  }
+
+  /* ── Left sidebar nav (replaces old bottom nav) ── */
+  /* Mobile-first: sidebar height is locked to the viewport and items share it equally (flex:1 each),
+     so all 12 tabs are always visible together on a phone screen without scrolling. */
+  .sidebar{
+    order:-1;flex-shrink:0;width:70px;
+    position:sticky;top:0;align-self:flex-start;
+    height:100vh;height:100dvh;overflow:hidden;
+    background:var(--panel);border-right:1px solid var(--border);
+    display:flex;flex-direction:column;
+    padding:max(6px,env(safe-area-inset-top)) 3px max(6px,env(safe-area-inset-bottom));
+    z-index:30;
+  }
+  .sidebar-brand{
+    flex:0 0 auto;
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:2px 2px 7px;margin-bottom:3px;border-bottom:1px solid var(--border);
+  }
+  .sidebar-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);}
+  .sidebar-brand span{font-size:8px;font-weight:700;letter-spacing:-0.01em;text-align:center;color:var(--text);line-height:1.1;}
 
   /* ── Top bar ── */
   .topbar{
     position:sticky;top:0;z-index:20;
-    background:rgba(0,0,0,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    background:var(--topbar-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
     border-bottom:1px solid var(--border);
     padding-top:max(14px,env(safe-area-inset-top));
     padding:max(14px,env(safe-area-inset-top)) 16px 10px 16px;
@@ -83,7 +128,7 @@
     background:linear-gradient(160deg,var(--panel),var(--panel-2));
     border:1px solid var(--border);border-radius:18px;padding:16px;
   }
-  .kpi-icon{width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .kpi-icon{width:32px;height:32px;border-radius:9px;background:var(--overlay-06);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
   .kpi-icon svg{width:16px;height:16px;}
   .kpi-label{font-size:11.5px;color:var(--text-dim);font-weight:500;line-height:1.3;min-height:28px;}
   .kpi-value{font-size:22px;font-weight:700;margin-top:6px;letter-spacing:-0.02em;}
@@ -113,7 +158,7 @@
   .list-main{flex:1;min-width:0;}
   .list-name{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .list-sub{font-size:11px;color:var(--text-faint);margin-top:1px;}
-  .list-bar-track{height:5px;background:rgba(255,255,255,0.08);border-radius:100px;margin-top:6px;overflow:hidden;}
+  .list-bar-track{height:5px;background:var(--overlay-08);border-radius:100px;margin-top:6px;overflow:hidden;}
   .list-bar-fill{height:100%;border-radius:100px;}
   .list-pct{font-size:14px;font-weight:700;flex-shrink:0;min-width:52px;text-align:right;}
 
@@ -174,13 +219,13 @@
   .stacked-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
   .stacked-row-name{font-size:13px;font-weight:600;}
   .stacked-row-total{font-size:11.5px;color:var(--text-faint);}
-  .stacked-bar{display:flex;height:10px;border-radius:100px;overflow:hidden;background:rgba(255,255,255,0.06);}
+  .stacked-bar{display:flex;height:10px;border-radius:100px;overflow:hidden;background:var(--overlay-06);}
   .stacked-seg{height:100%;}
   .ring-grid{display:flex;justify-content:space-around;padding:6px 4px 2px;}
   .ring-item{display:flex;flex-direction:column;align-items:center;gap:8px;}
   .ring-wrap{position:relative;width:76px;height:76px;}
   .ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
-  .ring-wrap .ring-bg{fill:none;stroke:rgba(255,255,255,0.08);stroke-width:8;}
+  .ring-wrap .ring-bg{fill:none;stroke:var(--overlay-08);stroke-width:8;}
   .ring-wrap .ring-fg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .4s ease;}
   .ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
   .ring-label{font-size:11px;color:var(--text-dim);text-align:center;font-weight:600;}
@@ -268,7 +313,7 @@
   .ov-br-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
   .ov-br-name{flex:1;font-size:13px;font-weight:600;}
   .ov-br-bar-wrap{flex:2;min-width:0;}
-  .ov-br-bar-track{height:6px;background:rgba(255,255,255,0.08);border-radius:100px;overflow:hidden;}
+  .ov-br-bar-track{height:6px;background:var(--overlay-08);border-radius:100px;overflow:hidden;}
   .ov-br-bar-fill{height:100%;border-radius:100px;transition:width .4s ease;}
   .ov-br-val{font-size:13px;font-weight:700;min-width:36px;text-align:right;flex-shrink:0;}
 
@@ -302,7 +347,7 @@
   .sparkline{width:100%;height:26px;display:block;}
   .mini-progress-wrap{position:relative;width:40px;height:40px;flex-shrink:0;}
   .mini-progress-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
-  .mini-progress-wrap .ring-bg{fill:none;stroke:rgba(255,255,255,0.08);stroke-width:5;}
+  .mini-progress-wrap .ring-bg{fill:none;stroke:var(--overlay-08);stroke-width:5;}
   .mini-progress-wrap .ring-fg{fill:none;stroke-width:5;stroke-linecap:round;}
   .mini-progress-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;}
   .tsa-mini-lbl{font-size:9px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.04em;text-align:center;margin-top:3px;font-weight:600;}
@@ -314,7 +359,7 @@
   .gauge-lbl{font-size:10.5px;color:var(--text-faint);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
 
   .bullet-wrap{padding:6px 2px;}
-  .bullet-track{position:relative;height:22px;background:rgba(255,255,255,0.06);border-radius:6px;overflow:visible;}
+  .bullet-track{position:relative;height:22px;background:var(--overlay-06);border-radius:6px;overflow:visible;}
   .bullet-fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;transition:width .4s ease;}
   .bullet-target-marker{position:absolute;top:-3px;bottom:-3px;width:3px;background:#fff;border-radius:2px;}
   .bullet-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text-dim);}
@@ -341,32 +386,21 @@
   .an-kpi-note{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-faint);padding:0 2px;margin-top:2px;}
   .an-kpi-note .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 
-  /* ── Bottom nav ── */
-  .bottom-nav{
-    position:fixed;bottom:0;left:0;right:0;z-index:30;
-    max-width:520px;margin:0 auto;
-    background:rgba(10,10,12,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    border-top:1px solid var(--border);
-    display:flex;padding:8px 6px calc(8px + env(safe-area-inset-bottom)) 6px;
-  }
+  /* ── Sidebar nav items (was bottom nav) ── */
+  /* flex:1 makes each of the 12 items share the sidebar's fixed height equally,
+     so the whole list always fits on one mobile screen with no scrolling. */
   .nav-btn{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-    padding:6px 2px;border-radius:12px;color:var(--text-faint);
-    min-height:52px;justify-content:center;cursor:pointer;
+    flex:1 1 0;min-height:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    padding:1px 2px;border-radius:8px;color:var(--text-faint);
+    text-align:center;cursor:pointer;overflow:hidden;
   }
-  .nav-btn svg{width:21px;height:21px;}
-  .nav-btn span{font-size:9px;font-weight:600;white-space:nowrap;}
-  .nav-btn.active{color:var(--blue);}
-
-  /* ── Mobile portrait fix: bottom nav scrolls horizontally so no tab is cut off ── */
-  @media (max-width:699px){
-    .bottom-nav{
-      overflow-x:auto;justify-content:flex-start;
-      -ms-overflow-style:none;scrollbar-width:none;
-    }
-    .bottom-nav::-webkit-scrollbar{display:none;}
-    .nav-btn{flex:0 0 auto;min-width:70px;padding:6px 10px;}
+  .nav-btn svg{width:16px;height:16px;flex-shrink:0;}
+  .nav-btn span{
+    font-size:6.6px;font-weight:600;line-height:1.08;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
+  .nav-btn.active{color:var(--blue);background:var(--overlay-06);}
 
   /* ── Territory filter row: wrap on laptop widths so nothing is clipped ── */
   @media (min-width:700px){
@@ -374,14 +408,18 @@
     .chip,.chip-reset{flex-shrink:0;}
   }
 
-  /* ── Desktop / large-screen layout ── */
+  /* ── Desktop / large-screen layout: roomier, top-aligned (not height-locked) sidebar ── */
   @media (min-width:860px){
-    body{max-width:1240px;padding-bottom:24px;}
+    .app-main{max-width:1240px;padding-bottom:24px;}
     .topbar{max-width:100%;left:auto;transform:none;border-radius:0 0 18px 18px;}
-    .bottom-nav{
-      position:sticky;max-width:1240px;border-radius:16px;margin:18px auto 0;
-      border:1px solid var(--border);
+    .sidebar{
+      width:120px;height:100vh;overflow-y:auto;
+      -ms-overflow-style:none;scrollbar-width:none;
     }
+    .sidebar::-webkit-scrollbar{display:none;}
+    .nav-btn{flex:0 0 auto;padding:10px 3px;gap:4px;}
+    .nav-btn span{font-size:10px;-webkit-line-clamp:3;}
+    .nav-btn svg{width:21px;height:21px;}
     .kpi-scroll{flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none;margin:0;padding:0;}
     .kpi-card{width:calc(25% - 8px);min-width:170px;}
     .ov-kpi-grid{grid-template-columns:repeat(4,1fr);}
@@ -396,12 +434,20 @@
 </head>
 <body>
 
+<div class="app-main">
+
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-row">
     <div class="brand"><div class="dot"></div><h1>CTG South</h1></div>
-    <div class="icon-btn" id="monthBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+    <div class="topbar-actions">
+      <div class="icon-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </div>
+      <div class="icon-btn" id="monthBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      </div>
     </div>
   </div>
   <div class="filter-row" id="territoryChips"></div>
@@ -1268,10 +1314,68 @@
   </div>
 </div>
 
+
+<!-- ═══════════════ KPI DASHBOARD VIEW (UI SHELL — NOT YET CONNECTED TO EXCEL DATA) ═══════════════ -->
+<div id="view-kpi" style="display:none;">
+
+  <!-- Filters -->
+  <div class="section" style="padding-bottom:0;">
+    <div class="section-title">KPI Dashboard — Partner · TSA · TMC</div>
+
+    <div class="filter-row" id="kpiTypeFilterRow">
+      <div class="chip active" data-kpi-type="all">All Types</div>
+      <div class="chip" data-kpi-type="Partner KPI">Partner KPI</div>
+      <div class="chip" data-kpi-type="TSA KPI">TSA KPI</div>
+      <div class="chip" data-kpi-type="TMC KPI">TMC KPI</div>
+      <div class="chip-reset" id="kpiResetBtn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v5h5"/></svg>
+        Reset
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:10px;padding-bottom:0;">
+    <select class="ov-tsa-select" id="kpiMonthSelect">
+      <option value="all">All Months</option>
+      <option value="Jan'26">Jan'26</option>
+      <option value="Feb'26">Feb'26</option>
+      <option value="Mar'26">Mar'26</option>
+      <option value="Apr'26">Apr'26</option>
+      <option value="May'26">May'26</option>
+      <option value="Jun'26">Jun'26</option>
+      <option value="Jul'26">Jul'26</option>
+    </select>
+  </div>
+
+  <div class="section" style="padding-top:10px;padding-bottom:0;">
+    <input class="search-box" id="kpiSearch" placeholder="Search KPI field, note, or value…">
+  </div>
+
+  <!-- Table -->
+  <div class="section" style="padding-top:14px;">
+    <div class="panel" style="padding:10px;">
+      <div class="panel-head" style="margin-bottom:8px;">
+        <div class="panel-head-main"><div><h3>KPI Report</h3><div class="sub" id="kpiTableSub">No data connected yet</div></div></div>
+        <div class="export-btn" id="kpiExportBtn" title="Export">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        </div>
+      </div>
+      <div id="kpiTableWrap" style="overflow-x:auto;">
+        <div style="padding:24px 6px;text-align:center;color:var(--text-faint);font-size:12px;">Excel data not connected yet</div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
 <div class="toast" id="toast">Updated — figures recalculated</div>
 
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
+</div><!-- /.app-main -->
+
+<!-- LEFT SIDEBAR NAV -->
+<div class="sidebar" id="sidebarNav">
+  <div class="sidebar-brand"><div class="dot"></div><span>CTG<br>South</span></div>
   <div class="nav-btn active" data-view="overview">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
     <span>Overview</span>
@@ -1279,6 +1383,30 @@
   <div class="nav-btn" data-view="directory">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4.5-6 7.5-6s6 2 7.5 6"/></svg>
     <span>TSA Target Vs Achievement</span>
+  </div>
+  <div class="nav-btn" data-view="base">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 12h6"/></svg>
+    <span>Base Analysis</span>
+  </div>
+  <div class="nav-btn" data-view="ylp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 21 12 17.5 5.8 21 7 14.14l-5-4.87 7.1-1.01z"/></svg>
+    <span>YLP Point Jan-June'26</span>
+  </div>
+  <div class="nav-btn" data-view="kpi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    <span>KPI Dashboard</span>
+  </div>
+  <div class="nav-btn" data-view="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Dist. View</span>
+  </div>
+  <div class="nav-btn" data-view="channel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l1.5-5h15L21 9M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zM9 21v-6h6v6"/></svg>
+    <span>Channel</span>
+  </div>
+  <div class="nav-btn" data-view="pricelist">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16v8H4z"/><path d="M9 16h6"/></svg>
+    <span>Price List 2026</span>
   </div>
   <div class="nav-btn" data-view="territories">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V10l6-4 6 4v11M9 21v-6h6v6M15 10l6-4v15h-6"/></svg>
@@ -1288,33 +1416,13 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6.5L22 9.3l-5 4.9 1.2 6.8L12 17.8l-6.2 3.2L7 14.2 2 9.3l7-.8z"/></svg>
     <span>Partner Winner Status</span>
   </div>
-  <div class="nav-btn" data-view="channel">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l1.5-5h15L21 9M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zM9 21v-6h6v6"/></svg>
-    <span>Channel</span>
-  </div>
   <div class="nav-btn" data-view="analysis">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l3.5-4.5 3 3L19 6"/></svg>
     <span>Analysis</span>
   </div>
-  <div class="nav-btn" data-view="base">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 12h6"/></svg>
-    <span>Base Analysis</span>
-  </div>
-  <div class="nav-btn" data-view="pricelist">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16v8H4z"/><path d="M9 16h6"/></svg>
-    <span>Price List 2026</span>
-  </div>
   <div class="nav-btn" data-view="tracker">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l4-8 4 5 3-3 4 6"/><circle cx="7" cy="9" r="1" fill="currentColor"/><circle cx="11" cy="14" r="1" fill="currentColor"/><circle cx="14" cy="11" r="1" fill="currentColor"/><circle cx="18" cy="17" r="1" fill="currentColor"/></svg>
     <span>Performance</span>
-  </div>
-  <div class="nav-btn" data-view="home">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span>Dist. View</span>
-  </div>
-  <div class="nav-btn" data-view="ylp">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 21 12 17.5 5.8 21 7 14.14l-5-4.87 7.1-1.01z"/></svg>
-    <span>YLP Point Jan-June'26</span>
   </div>
 </div>
 
@@ -1389,13 +1497,14 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentView = btn.dataset.view;
-    ['overview','home','territories','directory','tracker','channel','analysis','partner','base','pricelist','ylp'].forEach(v => {
+    ['overview','home','territories','directory','tracker','channel','analysis','partner','base','pricelist','ylp','kpi'].forEach(v => {
       document.getElementById('view-' + v).style.display = v === currentView ? 'block' : 'none';
     });
     renderAll();
     if(currentView === 'pricelist') renderPriceList();
     if(currentView === 'ylp') renderYLP();
-    document.getElementById('territoryChips').style.display = ['base','pricelist','tracker','home','ylp'].includes(currentView) ? 'none' : '';
+    if(currentView === 'kpi') initKpiDashboard();
+    document.getElementById('territoryChips').style.display = ['base','pricelist','tracker','home','ylp','kpi'].includes(currentView) ? 'none' : '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
@@ -4048,6 +4157,228 @@ function renderYLP(){
   }
 }
 // ── END YLP POINT JAN-JUNE'26 MODULE ──
+
+
+// ══════════════ KPI DASHBOARD MODULE — "KPI(Partner, TSA, TMC)" SHEET (SELF-CONTAINED) ══════════════
+// The sheet is parsed once (offline, from the source workbook) into the flattened array below —
+// every {type, month, field, value} entry mirrors an actual Excel cell 1:1, values unaltered,
+// genuinely blank cells kept as null (displayed as "-"). Embedding it here means this single
+// index.html file works standalone on GitHub Pages / any static host with no separate .xlsx
+// file, no fetch, and no CORS concerns. To refresh the data, re-export this array from the
+// workbook's "KPI(Partner, TSA, TMC)" sheet and replace it below — nothing else needs to change.
+const KPI_RECORDS_SOURCE = [{"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "75 / 50 / 25"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "No Volume Drive KPI listed this month (not part of Jan'26 KPI table)."}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Chittagong & Barishal Region (Luckies Scope): B&H (50%), Luckies (50%)\nChittagong & Barishal Region (Non-Luckies Scope): B&H (50%), LS (50%)\nTarget Setting Principle: Maintain ADM of Dec'25 or 1 memo per week/outlet, whichever is higher"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "150 / 100 / 50"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "75 / 50 / 25"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "—"}, {"type": "Partner KPI", "month": "Jan'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "300 / 200 / 100"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "100 / 50 / 25"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Target — Chittagong & Khulna & Barisal Region:\nTotal Volume (50%) & TK 8 LOW (50%)\nTarget Setting Principle: By outlet target to be set as per Q4'25 contribution."}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "300 / 150 / 75"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Chittagong Region (Luckies Scope): JP Fam (50%), Luckies (50%)\nChittagong Region (Non-Luckies Scope): JP Fam (50%), LS (50%)\nTarget Setting Principle: Maintain ADM of Q4'25 or 1 memo per week/outlet, whichever is higher"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "200 / 100 / 50"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "Luckies Range Campaign — As per scope; CDR (in scope market); As per cycle instruction"}, {"type": "Partner KPI", "month": "Feb'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "600 / 300 / 150"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "100 / 50 / 25"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Target — Rajshahi, Chittagong & Sylhet Region:\nTotal (50%) & TK 8 Low (50%)\n(No Luckies/Non-Luckies scope split shown for this line; Chittagong grouped with Rajshahi & Sylhet — no standalone figure.)\nTarget Setting Principle: By outlet target to be set as per Dec'25 – Feb'26 contribution."}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "300 / 150 / 75"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Chittagong Region: LS (50%), Luckies (50%) — Luckies Scope\nChittagong Region: LS (50%), Royals (50%) — Non-Luckies Scope\nTarget Setting Principle: Maintain ADM of Q4'25 + 1 memo, or 1 memo per week/outlet, whichever is higher"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "200 / 100 / 50"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "Luckies Range Campaign — As per scope; CDR (in scope market); As per cycle instruction"}, {"type": "Partner KPI", "month": "Mar'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "600 / 300 / 150"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "25 / 25 / 25"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Target — Khulna, Barisal & Chittagong Region (Luckies Scope):\nTotal (75%) & Luckies (25%)\nKhulna, Barisal & Chittagong Region (Non-Luckies Scope): Total (75%) & TK 8 Low (25%)\nTarget Setting Principle: By outlet target to be set as per Dec'25 – Feb'26 contribution."}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "425 / 200 / 75"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Chittagong Region (Luckies Scope): LS (50%), Luckies (50%)\nChittagong Region (Non-Luckies Scope): LS (50%), Royals (50%)\nTarget Setting Principle: Maintain ADM of Q4'25 or 1 memo per week/outlet, whichever is higher"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "150 / 75 / 50"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "Derby Plus Campaign — As per scope; CDR (in scope market); As per cycle instruction"}, {"type": "Partner KPI", "month": "Apr'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "600 / 300 / 150"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "25 / 25 / 25"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Target — Chittagong Region (Luckies Scope):\nTotal (75%) & Luckies (25%)\nChittagong Region (Non-Luckies Scope): Total (75%) & TK 8 Low (25%)\nTarget Setting Principle: By outlet target to be set as per Dec'25 – Feb'26 contribution."}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "425 / 200 / 75"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Chittagong Region: B&H (50%), Luckies (50%) — Luckies Scope\nChittagong Region: B&H (50%), LS (50%) — Non-Luckies Scope\nTarget Setting Principle: Maintain ADM of Q4'25 or 1 memo per week/outlet, whichever is higher"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "150 / 75 / 50"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "Derby Plus Campaign — As per scope; CDR (in scope market); As per cycle instruction"}, {"type": "Partner KPI", "month": "May'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "600 / 300 / 150"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "50 / 50 / 50"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Target — Dhaka South, Dhaka North, Khulna & Chittagong Region (Luckies Scope):\nTotal Volume (80%), Luckies (20%)\nDhaka South, Dhaka North, Khulna & Chittagong Region (Luckies Non-Scope): Total Volume (100%)\nTarget Setting Principle: By outlet target to be set as per Dec'25 – Mar'26 contribution.\n(Note: Chittagong grouped with Dhaka South, Dhaka North & Khulna — no standalone figure.)"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "150 / 100 / 50"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "Dhaka South, Dhaka North, Barishal, Chittagong, Rajshahi Region (Luckies Scope):\nB&H (25%), Luckies (25%), TK 8 Low (50%)\nDhaka South, Dhaka North, Barishal, Chittagong Region (Non-Luckies Scope):\nB&H (25%), LS (25%), TK 8 Low (50%)\nTarget Setting Principle: Maintain ADM of Q4'25 or 1 memo per week/outlet, whichever is higher\n(Note: Chittagong grouped with Dhaka South, Dhaka North & Barishal — no standalone figure.)"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "150 / 100 / 50"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "Derby Range Campaign — As per scope; CDR (in scope market); As per cycle instruction"}, {"type": "Partner KPI", "month": "Jun'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "350 / 250 / 150"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Prioritized Communication\n(Platinum/Gold/Silver)", "value": "70 / 70 / 70"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Volume Drive — Chittagong Detail", "value": "By Region Volume Target — Dhaka South, Dhaka North, Sylhet, Rajshahi, Khulna, Barisal & Chittagong: Total Volume (100%)\nTarget Setting Principle: By outlet target to be set as per Dec'25 – Feb'26 contribution.\n(Note: Chittagong grouped with 6 other regions — single blended target, no standalone figure.)"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Volume Drive Points\n(Platinum/Gold/Silver)", "value": "120 / 100 / 80"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Distribution Drive — Chittagong Detail", "value": "By Region Target — Dhaka South, Dhaka North, Rajshahi, Khulna, Barisal & Chittagong:\nB&H (50%), JP (50%)\n(Note: Chittagong grouped with 5 other regions — single blended target, no standalone figure. No Luckies/Non-Luckies scope split shown this month.)"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Distribution Drive Points\n(Platinum/Gold/Silver)", "value": "80 / 70 / 60"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: POSM Retention Points\n(Platinum/Gold/Silver)", "value": "N/A"}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Other Campaign\n(Derby/Luckies Range)", "value": "* Updated set of Partner KPIs to be considered for full month KPI."}, {"type": "Partner KPI", "month": "Jul'26", "field": "Partner KPI: Total Points\n(Platinum/Gold/Silver)", "value": "270 / 240 / 210"}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Not part of this month's TSA KPI (no volume-achievement line item)."}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation-wise By Partner's dist. drive target achievement — 40%"}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "YLP'25 Partner Gift Requisition (Needs to complete 100% Partners along with Mega within communicated timeline) — 40%"}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: Call Target", "value": "Only at Partner Outlets (Prioritized Coms, POSM Retention) — 10%"}, {"type": "TSA KPI", "month": "Jan'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Volume Target Achievement — 35%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's dist. drive target achievement — 25%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "YLP'25 Partner Gift Requisition (Needs to complete 100% Partners along with Mega within communicated timeline) — 20%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: Call Target", "value": "Only at Partner Outlets (Campaign, Prioritized Coms) — 10%"}, {"type": "TSA KPI", "month": "Feb'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Demarcation wise target achievement in total volume (as per DRM and region wise shared by route volume) — 35%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's dist. drive target achievement — 15%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "YLP'25 Partner Gift Disbursement Verification — 30%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: Call Target", "value": "Only at Partner Outlets (Campaign, Prioritized Coms) — 10%"}, {"type": "TSA KPI", "month": "Mar'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Demarcation wise target achievement in total volume (as per DRM and region wise shared by route volume) — 40%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's volume target achievement — 20%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "YLP'25 Partner Gift Disbursement Verification — 20%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: Call Target", "value": "Only at Partner Outlets (Campaign, Prioritized Coms) — 10%"}, {"type": "TSA KPI", "month": "Apr'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Demarcation wise target achievement in total volume (as per DRM and region wise shared by route volume) — 60%"}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's dist. drive target achievement — 20%"}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "Not part of this month's TSA KPI (Gift Requisition/Disbursement line dropped)."}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: Call Target", "value": "Partner Outlets (12), GT Outlets (6) & C&C (3) — 10%"}, {"type": "TSA KPI", "month": "May'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Demarcation wise target achievement in total volume (as per DRM and region wise shared by route volume) — 60%"}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's dist. drive target achievement — 20%"}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "Not part of this month's TSA KPI (Gift Requisition/Disbursement line dropped)."}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: Call Target", "value": "Partner Outlets (12), GT Outlets (6) & C&C (3) — 10%"}, {"type": "TSA KPI", "month": "Jun'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: Demarcation-wise Volume Target Achievement", "value": "Demarcation wise target achievement in total volume (as per SOP and region wise shared by route volume) — 50%"}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: Demarcation-wise Distribution/Partner Target Achievement", "value": "Demarcation wise By Partner's dist. drive target achievement — 30%"}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: Gift Requisition / Disbursement Verification", "value": "Not part of this KPI table."}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: TO Market Visit & Observation (By-point Audit)", "value": "10%"}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: Call Target", "value": "Partner Outlets (12), GT Outlets (6) & C&C (3) — 10%"}, {"type": "TSA KPI", "month": "Jul'26", "field": "TSA KPI: Total", "value": "100%"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Jan'26", "field": "TMC KPI: Total", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Feb'26", "field": "TMC KPI: Total", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Mar'26", "field": "TMC KPI: Total", "value": "NOT PROVIDED"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "30%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "15%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "15%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "10%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "10%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Apr'26", "field": "TMC KPI: Total", "value": "100%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "50%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "10%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "10%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "10%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "May'26", "field": "TMC KPI: Total", "value": "100%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "40%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "20%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "10%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "10%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Jun'26", "field": "TMC KPI: Total", "value": "100%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "40%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: By Partner Volume Target Achievement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: YLP Gift Disbursement\n(Based on TSA Cumulative Performance)", "value": "—"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: Memo Target Achievement\n(Based on TSA Cumulative Performance)", "value": "20%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: Campaign Management\n& Team Performance", "value": "10%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: Godown Maintenance &\nOperational Compliance", "value": "10%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: TMC Call Target Achievement\n(B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: TO & AM Market Visit\nObservation (B2B & Merchandising)", "value": "10%"}, {"type": "TMC KPI", "month": "Jul'26", "field": "TMC KPI: Total", "value": "100%"}];
+
+const KPI_TYPE_COLORS = { 'Partner KPI':'#0a84ff', 'TSA KPI':'#30d158', 'TMC KPI':'#ff9f0a' };
+
+let kpiInitDone = false;
+let kpiTypeSelected = 'all';
+let kpiMonthSelected = 'all';
+let KPI_RECORDS = [];          // active in-memory copy of KPI_RECORDS_SOURCE
+let kpiDataLoaded = false;
+let kpiLoadError = null;
+let kpiLoadPromise = null;     // ensures the data is "loaded" (assigned) exactly once
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Displays "-" for genuinely blank cells; every other value is shown exactly as stored in Excel.
+function kpiDisplayValue(v){
+  if(v === null || v === undefined) return '-';
+  if(typeof v === 'string' && v.trim() === '') return '-';
+  return String(v);
+}
+
+// Loads the embedded records exactly once; subsequent calls reuse the cached promise/result.
+function loadKpiExcelData(){
+  if(kpiLoadPromise) return kpiLoadPromise;
+  kpiLoadPromise = Promise.resolve().then(() => {
+    KPI_RECORDS = KPI_RECORDS_SOURCE;
+    kpiDataLoaded = true;
+    return KPI_RECORDS;
+  }).catch(err => {
+    kpiLoadError = err;
+    kpiDataLoaded = false;
+    throw err;
+  });
+  return kpiLoadPromise;
+}
+
+// Applies the active KPI Type filter, Month filter, and search box against the cached records.
+function getFilteredKpiRecords(){
+  const term = document.getElementById('kpiSearch').value.trim().toLowerCase();
+  return KPI_RECORDS.filter(r => {
+    if(kpiTypeSelected !== 'all' && r.type !== kpiTypeSelected) return false;
+    if(kpiMonthSelected !== 'all' && r.month !== kpiMonthSelected) return false;
+    if(term){
+      const hay = `${r.type} ${r.month} ${r.field} ${kpiDisplayValue(r.value)}`.toLowerCase();
+      if(!hay.includes(term)) return false;
+    }
+    return true;
+  });
+}
+
+function initKpiDashboard(){
+  if(!kpiInitDone){
+    kpiInitDone = true;
+
+    // KPI Type filter chips
+    document.querySelectorAll('#kpiTypeFilterRow .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#kpiTypeFilterRow .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        kpiTypeSelected = chip.dataset.kpiType;
+        renderKpiDashboardViews();
+      });
+    });
+
+    // Month filter
+    document.getElementById('kpiMonthSelect').addEventListener('change', (e) => {
+      kpiMonthSelected = e.target.value;
+      renderKpiDashboardViews();
+    });
+
+    // Search box
+    document.getElementById('kpiSearch').addEventListener('input', () => {
+      renderKpiDashboardViews();
+    });
+
+    // Reset button — clears type, month, and search filters
+    document.getElementById('kpiResetBtn').addEventListener('click', () => {
+      kpiTypeSelected = 'all';
+      kpiMonthSelected = 'all';
+      document.querySelectorAll('#kpiTypeFilterRow .chip').forEach(c => c.classList.remove('active'));
+      document.querySelector('#kpiTypeFilterRow .chip[data-kpi-type="all"]').classList.add('active');
+      document.getElementById('kpiMonthSelect').value = 'all';
+      document.getElementById('kpiSearch').value = '';
+      renderKpiDashboardViews();
+    });
+
+    // Export button — exports exactly the rows currently matching the active filters/search
+    document.getElementById('kpiExportBtn').addEventListener('click', () => {
+      const rows = getFilteredKpiRecords();
+      if(rows.length === 0) return;
+      const header = ['KPI Type','Month','KPI Field','Value'];
+      const csvLines = [header.join(',')].concat(rows.map(r => [r.type, r.month, r.field, kpiDisplayValue(r.value)]
+        .map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')));
+      const blob = new Blob([csvLines.join('\n')], { type:'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'kpi_dashboard_export.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  if(kpiDataLoaded){
+    renderKpiDashboardViews();
+    return;
+  }
+  if(kpiLoadError){
+    renderKpiLoadError(kpiLoadError);
+    return;
+  }
+
+  document.getElementById('kpiTableSub').textContent = 'Loading KPI(Partner, TSA, TMC) sheet…';
+  document.getElementById('kpiTableWrap').innerHTML =
+    '<div style="padding:24px 6px;text-align:center;color:var(--text-faint);font-size:12px;">Loading Excel data…</div>';
+
+  loadKpiExcelData()
+    .then(() => renderKpiDashboardViews())
+    .catch(err => renderKpiLoadError(err));
+}
+
+function renderKpiLoadError(err){
+  document.getElementById('kpiTableSub').textContent = 'Could not load Excel data';
+  document.getElementById('kpiTableWrap').innerHTML =
+    `<div style="padding:24px 6px;text-align:center;color:var(--red);font-size:12px;">${escapeHtml(err.message || 'Failed to load KPI Excel data')}</div>`;
+}
+
+function renderKpiDashboardViews(){
+  renderKpiTable();
+}
+
+// Groups filtered records by (KPI Type, Month) preserving the order they first appear in,
+// so the Month/Type header is shown once per group instead of being repeated on every row.
+function groupKpiRecords(rows){
+  const groups = [];
+  const map = new Map();
+  rows.forEach(r => {
+    const key = r.type + '|' + r.month;
+    if(!map.has(key)){
+      const g = { type:r.type, month:r.month, items:[] };
+      map.set(key, g);
+      groups.push(g);
+    }
+    map.get(key).items.push(r);
+  });
+  return groups;
+}
+
+// Table reflects only records matching the current KPI Type + Month + search filters.
+// Month/Type are shown once per group (not repeated per row); values are shown exactly
+// as stored in Excel, with genuinely blank cells rendered as "-".
+function renderKpiTable(){
+  const sub = document.getElementById('kpiTableSub');
+  const wrap = document.getElementById('kpiTableWrap');
+  const rows = getFilteredKpiRecords();
+
+  const parts = [];
+  parts.push(kpiTypeSelected === 'all' ? 'All Types' : kpiTypeSelected);
+  parts.push(kpiMonthSelected === 'all' ? 'All Months' : kpiMonthSelected);
+  const term = document.getElementById('kpiSearch').value.trim();
+  if(term) parts.push(`Search: "${term}"`);
+  sub.textContent = `${parts.join(' · ')} — ${rows.length} record${rows.length === 1 ? '' : 's'}`;
+
+  if(rows.length === 0){
+    wrap.innerHTML = '<div style="padding:24px 6px;text-align:center;color:var(--text-faint);font-size:12px;">No matching KPI records</div>';
+    return;
+  }
+
+  const groups = groupKpiRecords(rows);
+
+  // Field labels in the source data are prefixed with their own type, e.g. "Partner KPI: Prioritized Communication".
+  // Since the group header above already shows the type once, strip that repeated prefix from every row label here.
+  const stripTypePrefix = (field, type) => {
+    const prefix = type + ': ';
+    return field.startsWith(prefix) ? field.slice(prefix.length) : field;
+  };
+
+  wrap.innerHTML = groups.map(g => `
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;align-items:center;gap:8px;padding:4px 6px 10px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+        <span style="font-size:13px;font-weight:700;color:var(--text);">${escapeHtml(g.type)}</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--text-faint);flex-shrink:0;"></span>
+        <span style="font-size:12.5px;font-weight:700;color:var(--blue);">${escapeHtml(g.month)}</span>
+        <span style="margin-left:auto;font-size:10.5px;color:var(--text-faint);white-space:nowrap;">${g.items.length} field${g.items.length === 1 ? '' : 's'}</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+        <tbody>
+          ${g.items.map(it => `
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:9px 8px 9px 6px;width:34%;color:var(--text-dim);vertical-align:top;white-space:normal;">${escapeHtml(stripTypePrefix(it.field, g.type))}</td>
+              <td style="padding:9px 6px;white-space:normal;">${escapeHtml(kpiDisplayValue(it.value)).replace(/\n/g,'<br>')}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`).join('');
+}
+
+// ── THEME TOGGLE (Dark / Light) ──
+(function(){
+  const btn = document.getElementById('themeToggleBtn');
+  const moonIcon = document.getElementById('themeIconMoon');
+  const sunIcon = document.getElementById('themeIconSun');
+  if(!btn) return;
+  let isLight = false;
+  btn.addEventListener('click', () => {
+    isLight = !isLight;
+    document.body.classList.toggle('light', isLight);
+    moonIcon.style.display = isLight ? 'none' : 'block';
+    sunIcon.style.display = isLight ? 'block' : 'none';
+  });
+})();
+
 
 
 
