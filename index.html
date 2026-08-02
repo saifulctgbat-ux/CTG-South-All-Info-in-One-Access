@@ -760,6 +760,58 @@
   @media (max-width:400px){ .live-clock .lc-date{display:none;} }
   @media (max-width:340px){ .live-clock{display:none;} }
 
+  /* ── MOBILE PORTRAIT ONLY: responsive header fix ──
+     Scoped to (max-width:767px) AND (orientation:portrait) so Desktop
+     (>=992px) and Mobile Landscape are completely unaffected. */
+  @media (max-width:767px) and (orientation:portrait){
+    .topbar{padding-left:10px;padding-right:10px;padding-bottom:8px;}
+    .topbar-row{flex-wrap:wrap;row-gap:8px;align-items:center;}
+
+    /* Row 1: logo + title get their own full-width row so they never
+       collide with the clock/icons below them. */
+    .brand{flex:1 1 100%;min-width:0;order:1;}
+    .brand-mark{height:clamp(24px,8vw,34px);padding:2px 4px;flex-shrink:0;}
+    .brand-text{min-width:0;flex:1 1 auto;}
+    .brand h1{
+      font-size:clamp(13px,4.2vw,16px);
+      white-space:normal;overflow-wrap:break-word;line-height:1.15;
+    }
+    .brand .eyebrow{
+      font-size:clamp(7px,2.2vw,9px);white-space:normal;overflow:visible;
+      max-width:100%;
+    }
+
+    /* Row 2: date/time + icons share the row, wrapping only if needed,
+       and never overlapping the title above. */
+    .topbar-actions{
+      order:2;flex:1 1 100%;flex-wrap:wrap;
+      justify-content:flex-end;align-items:center;gap:8px;margin:0;
+    }
+    /* Clock takes its own full-width row so the icon buttons that follow
+       are always forced onto the next line TOGETHER (never split, never
+       one icon left dangling alone). */
+    .topbar-actions .live-clock{
+      flex:1 1 100%;min-width:0;max-width:100%;
+      padding:5px 8px;gap:6px;margin-right:0;margin-bottom:2px;
+    }
+    .live-clock .lc-icon{width:22px;height:22px;flex-shrink:0;}
+    .live-clock .lc-icon svg{width:11px;height:11px;}
+    .live-clock .lc-text{min-width:0;}
+    .live-clock .lc-time{font-size:clamp(12px,3.6vw,15px);}
+    .live-clock .lc-time .lc-meridiem{font-size:clamp(8px,2.2vw,10px);}
+    .live-clock .lc-date{
+      font-size:clamp(8px,2.2vw,9.5px);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:36vw;
+    }
+    .icon-btn{width:32px;height:32px;flex-shrink:0;}
+    .icon-btn svg{width:14px;height:14px;}
+    .filter-row{margin-top:10px;}
+  }
+  @media (max-width:360px) and (orientation:portrait){
+    .live-clock .lc-date{display:none;}
+    .live-clock .lc-time{font-size:12px;}
+  }
+
   /* — Icon button badge (for notifications) — */
   .icon-btn{position:relative;}
   .icon-btn .ibn-badge{position:absolute;top:-3px;right:-3px;min-width:15px;height:15px;padding:0 3px;border-radius:100px;
