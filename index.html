@@ -794,14 +794,21 @@
       flex:1 1 100%;min-width:0;max-width:100%;
       padding:5px 8px;gap:6px;margin-right:0;margin-bottom:2px;
     }
-    .live-clock .lc-icon{width:22px;height:22px;flex-shrink:0;}
-    .live-clock .lc-icon svg{width:11px;height:11px;}
-    .live-clock .lc-text{min-width:0;}
-    .live-clock .lc-time{font-size:clamp(12px,3.6vw,15px);}
+    .live-clock .lc-icon{width:26px;height:26px;flex-shrink:0;}
+    .live-clock .lc-icon svg{width:13px;height:13px;}
+    /* Put date/day beside the time (using the empty space now that the
+       clock has its own full-width row) instead of stacking below it. */
+    .live-clock .lc-text{
+      flex-direction:row;align-items:baseline;flex:1 1 auto;min-width:0;
+      justify-content:space-between;gap:10px;
+    }
+    .live-clock .lc-time{flex-shrink:0;font-size:clamp(13px,3.8vw,16px);}
     .live-clock .lc-time .lc-meridiem{font-size:clamp(8px,2.2vw,10px);}
     .live-clock .lc-date{
-      font-size:clamp(8px,2.2vw,9.5px);
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:36vw;
+      display:block !important;margin-top:0;flex:1 1 auto;min-width:0;
+      text-align:right;
+      font-size:clamp(10px,3vw,12.5px);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none;
     }
     .icon-btn{width:32px;height:32px;flex-shrink:0;}
     .icon-btn svg{width:14px;height:14px;}
