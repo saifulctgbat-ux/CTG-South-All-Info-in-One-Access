@@ -1083,7 +1083,27 @@
       </div>
       <button type="submit" id="loginSubmitBtn">প্রবেশ করুন</button>
       <div id="loginError"></div>
+      <div id="loginMsg" style="color:var(--secondary);font-size:12.5px;margin-top:10px;text-align:center;min-height:16px;"></div>
+      <div style="text-align:center;margin-top:14px;">
+        <a href="javascript:void(0)" id="forgotPassLink" style="color:var(--text-dim);font-size:12.5px;text-decoration:underline;">পাসওয়ার্ড ভুলে গেছেন?</a>
+      </div>
     </form>
+  </div>
+</div>
+
+<div id="resetOverlay" style="position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);padding:20px;">
+  <div style="width:100%;max-width:360px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:28px 26px;">
+    <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text);margin-bottom:6px;">পাসওয়ার্ড রিসেট</div>
+    <div style="color:var(--text-dim);font-size:12.5px;margin-bottom:20px;">আপনার নিবন্ধিত ইমেইল দিন — রিসেট লিংক পাঠানো হবে</div>
+    <div class="login-field">
+      <label for="resetEmail">ইমেইল</label>
+      <input type="email" id="resetEmail" placeholder="আপনার ইমেইল লিখুন">
+    </div>
+    <button type="button" id="resetSendBtn" style="width:100%;padding:12px 14px;border:none;border-radius:var(--radius-sm);background:var(--primary);color:#fff;font-weight:700;font-size:14px;cursor:pointer;margin-top:4px;">রিসেট লিংক পাঠান</button>
+    <div id="resetMsg" style="font-size:12.5px;margin-top:12px;text-align:center;min-height:16px;"></div>
+    <div style="text-align:center;margin-top:8px;">
+      <a href="javascript:void(0)" id="resetCancelLink" style="color:var(--text-dim);font-size:12.5px;text-decoration:underline;">লগইনে ফিরে যান</a>
+    </div>
   </div>
 </div>
 
@@ -1134,6 +1154,40 @@
   window.ctgLogout = function(){
     auth.signOut();
   };
+
+  // ── FORGOT PASSWORD ──
+  var forgotLink = q('forgotPassLink'), resetOverlay = q('resetOverlay'),
+      resetEmail = q('resetEmail'), resetSendBtn = q('resetSendBtn'),
+      resetMsg = q('resetMsg'), resetCancelLink = q('resetCancelLink'),
+      loginMsg = q('loginMsg');
+
+  forgotLink.addEventListener('click', function(){
+    resetMsg.textContent = '';
+    resetEmail.value = emailInput.value || '';
+    resetOverlay.style.display = 'flex';
+  });
+  resetCancelLink.addEventListener('click', function(){
+    resetOverlay.style.display = 'none';
+  });
+  resetSendBtn.addEventListener('click', function(){
+    var email = resetEmail.value.trim();
+    if(!email){ resetMsg.style.color = 'var(--red)'; resetMsg.textContent = 'ইমেইল লিখুন।'; return; }
+    resetSendBtn.disabled = true;
+    resetSendBtn.textContent = 'পাঠানো হচ্ছে...';
+    auth.sendPasswordResetEmail(email)
+      .then(function(){
+        resetMsg.style.color = 'var(--secondary)';
+        resetMsg.textContent = 'রিসেট লিংক পাঠানো হয়েছে, ইমেইল চেক করুন।';
+      })
+      .catch(function(){
+        resetMsg.style.color = 'var(--red)';
+        resetMsg.textContent = 'পাঠাতে সমস্যা হয়েছে, ইমেইলটি যাচাই করুন।';
+      })
+      .finally(function(){
+        resetSendBtn.disabled = false;
+        resetSendBtn.textContent = 'রিসেট লিংক পাঠান';
+      });
+  });
 })();
 </script>
 
