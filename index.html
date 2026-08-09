@@ -2250,6 +2250,14 @@
       <select class="ov-tsa-select" id="ylpRouteSel" style="flex:1;min-width:120px;"></select>
       <select class="ov-tsa-select" id="ylpMonthSel" style="flex:1;min-width:120px;"></select>
     </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+      <select class="ov-tsa-select" id="ylpCategorySel" style="flex:1;min-width:120px;">
+        <option value="all">All Categories</option>
+        <option value="Platinum">Platinum</option>
+        <option value="Gold">Gold</option>
+        <option value="Silver">Silver</option>
+      </select>
+    </div>
     <input class="search-box" id="ylpSearch" placeholder="Search partner name…" style="margin-bottom:10px;">
   </div>
   <div class="section" style="padding-top:0;">
@@ -2351,6 +2359,14 @@
         <option value="Jun'26">Jun'26</option>
         <option value="Jul'26">Jul'26</option>
         <option value="Aug'26" selected>August'26 (Super Over)</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+      <select class="ov-tsa-select" id="bpCategorySel" style="flex:1;min-width:120px;">
+        <option value="all">All Categories</option>
+        <option value="Platinum">Platinum</option>
+        <option value="Gold">Gold</option>
+        <option value="Silver">Silver</option>
       </select>
     </div>
     <input class="search-box" id="bpSearch" placeholder="Search by Outlet Code…" style="margin-bottom:10px;">
@@ -5423,7 +5439,7 @@ const YLP_MONTH_COLS = {
   "May'26":   {t:13, e:14, b:-1},
   "June'26":  {t:15, e:16, b:-1}
 };
-let ylpTerritory = 'all', ylpTsa = 'all', ylpRoute = 'all', ylpMonth = 'all';
+let ylpTerritory = 'all', ylpTsa = 'all', ylpRoute = 'all', ylpMonth = 'all', ylpCategory = 'all';
 let ylpPage = 1, ylpSortCol = -1, ylpSortDir = 1;
 const ylpPageSize = 15;
 
@@ -5456,6 +5472,9 @@ function ylpInitFilters(){
   });
   monthSel.addEventListener('change', (e) => {
     ylpMonth = e.target.value; renderYLP();
+  });
+  document.getElementById('ylpCategorySel').addEventListener('change', (e) => {
+    ylpCategory = e.target.value; ylpPage = 1; renderYLP();
   });
   document.getElementById('ylpSearch').addEventListener('input', () => {
     ylpPage = 1; renderYLP();
@@ -5507,6 +5526,7 @@ function ylpFilteredSorted(){
     if(ylpTerritory !== 'all' && YLP_RAW.T[r[0]] !== ylpTerritory) return false;
     if(ylpTsa !== 'all' && YLP_RAW.L[r[1]] !== ylpTsa) return false;
     if(ylpRoute !== 'all' && YLP_RAW.R[r[2]] !== ylpRoute) return false;
+    if(ylpCategory !== 'all' && r[20] !== ylpCategory) return false;
     if(q && !String(r[3]).toLowerCase().includes(q)) return false;
     return true;
   });
@@ -5881,6 +5901,7 @@ let bpTerritorySelected = 'all';
 let bpTsaSelected       = 'all';
 let bpRouteSelected     = 'all';
 let bpMonthSelected     = 'Aug\'26';
+let bpCategorySelected  = 'all';
 
 // ── Dropdown population ────────────────────────────────────────────
 function bpPopulateDropdowns(){
@@ -5918,6 +5939,7 @@ function getFilteredBpRecords(){
     if(bpTsaSelected       !== 'all' && r['TSA Location']    !== bpTsaSelected)       continue;
     if(bpRouteSelected     !== 'all' && r['Route / Section'] !== bpRouteSelected)     continue;
     if(bpMonthSelected     !== 'all' && r['Month']           !== bpMonthSelected)     continue;
+    if(bpCategorySelected  !== 'all' && r['Sub_Channel']     !== bpCategorySelected)  continue;
 
     if(term && !String(r['Outlet Code']).toLowerCase().includes(term)) continue;
 
@@ -6004,6 +6026,12 @@ function initBpDashboard(){
     renderBpTable();
   });
 
+  document.getElementById('bpCategorySel').addEventListener('change', function(e){
+    bpCategorySelected = e.target.value;
+    bpCurrentPage = 1;
+    renderBpTable();
+  });
+
   var bpSearchTimer = null;
   document.getElementById('bpSearch').addEventListener('input', function(){
     clearTimeout(bpSearchTimer);
@@ -6074,6 +6102,7 @@ function renderBpTable(){
   if(bpTsaSelected       !== 'all') parts.push(bpTsaSelected);
   if(bpRouteSelected     !== 'all') parts.push(bpRouteSelected);
   if(bpMonthSelected     !== 'all') parts.push(bpMonthDisplayLabel(bpMonthSelected));
+  if(bpCategorySelected  !== 'all') parts.push(bpCategorySelected);
   var searchEl = document.getElementById('bpSearch');
   var term = searchEl ? searchEl.value.trim() : '';
   if(term) parts.push('Code: "' + term + '"');
