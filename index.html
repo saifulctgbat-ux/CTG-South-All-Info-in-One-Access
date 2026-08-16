@@ -1372,6 +1372,7 @@
 <div id="view-overview">
   <div class="section" style="padding-bottom:8px;">
     <div class="section-title">TSA Overview</div>
+    <select class="ov-tsa-select" id="ovTerritorySelect" style="margin-bottom:8px;"></select>
     <select class="ov-tsa-select" id="ovTsaSelect"></select>
   </div>
 
@@ -3620,6 +3621,22 @@ function ovScopeLabel(){
   return currentTerritory === 'all' ? OV_CTG_SOUTH : currentTerritory;
 }
 
+// Populate Territory select dropdown (Overview tab) — drives the same global
+// territory filter (currentTerritory) that the top territory chips use, so
+// picking a territory here scopes the whole Overview tab to it.
+function populateOvTerritorySelect(){
+  const sel = document.getElementById('ovTerritorySelect');
+  if(!sel) return;
+  const opts = [{ value:'all', label:'All Territories (CTG South)' }, ...TERRITORIES.map(t => ({ value:t, label:t }))];
+  sel.innerHTML = opts.map(o => `<option value="${o.value}" ${o.value===currentTerritory?'selected':''}>${o.label}</option>`).join('');
+}
+document.getElementById('ovTerritorySelect').addEventListener('change', e => {
+  currentTerritory = e.target.value;
+  ovSelectedLoc = OV_AGGREGATE;
+  renderChips();
+  renderOverview();
+});
+
 // Populate TSA select dropdown
 function populateOvSelect(){
   const sel = document.getElementById('ovTsaSelect');
@@ -3879,6 +3896,7 @@ function renderOvPerformance(d){
 }
 
 function renderOverview(){
+  populateOvTerritorySelect();
   populateOvSelect();
   const d = getOvData();
   if(!d) return;
