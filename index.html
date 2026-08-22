@@ -184,59 +184,185 @@
   }
 
   body.auth-pending .app-main{display:none !important;}
+
+  /* ── Login overlay ── */
   #loginOverlay{
     position:fixed;inset:0;z-index:99999;display:none;
     align-items:center;justify-content:center;
-    background:
-      radial-gradient(1100px 480px at 100% -10%, rgba(0,166,81,0.10), transparent 60%),
-      var(--bg);
     padding:20px;
+    background:
+      radial-gradient(ellipse 900px 500px at 80% -5%,  rgba(0,166,81,0.13), transparent 62%),
+      radial-gradient(ellipse 600px 400px at 10% 110%, rgba(0,77,46,0.10),  transparent 55%),
+      var(--bg);
+  }
+  body.light #loginOverlay{
+    background:
+      radial-gradient(ellipse 900px 500px at 80% -5%,  rgba(0,166,81,0.18), transparent 62%),
+      radial-gradient(ellipse 600px 400px at 10% 110%, rgba(0,77,46,0.15),  transparent 55%),
+      var(--bg);
   }
   body.auth-pending #loginOverlay{display:flex;}
+
+  /* ── Card ── */
   #loginCard{
-    width:100%;max-width:380px;background:var(--panel);
-    border:1px solid var(--border);border-radius:var(--radius-lg);
-    box-shadow:var(--shadow-lg);padding:36px 32px 30px;
+    width:100%;max-width:400px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-lg);
+    padding:0;
+    overflow:hidden;
+    animation:loginSlideUp .38s var(--ease) both;
   }
+  @keyframes loginSlideUp{
+    from{opacity:0;transform:translateY(22px) scale(0.98);}
+    to  {opacity:1;transform:translateY(0)    scale(1);}
+  }
+
+  /* Card header stripe */
+  #loginCardHeader{
+    background:linear-gradient(135deg, var(--dark-green) 0%, var(--primary) 60%, rgba(0,166,81,0.85) 100%);
+    padding:28px 32px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  #loginCardHeader::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  #loginCardHeader::after{
+    content:'';position:absolute;
+    width:180px;height:180px;border-radius:50%;
+    background:rgba(255,255,255,0.06);
+    top:-60px;right:-40px;
+  }
+
+  /* Logo mark */
+  #loginLogoMark{
+    width:44px;height:44px;border-radius:12px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    position:relative;z-index:1;
+  }
+  #loginLogoMark svg{width:24px;height:24px;display:block;}
+
   #loginCard .login-brand{
-    font-family:var(--font-display);font-weight:700;font-size:22px;
-    color:var(--dark-green);margin-bottom:4px;
+    font-family:var(--font-display);font-weight:700;font-size:24px;
+    color:#fff;margin-bottom:4px;position:relative;z-index:1;
+    letter-spacing:-0.3px;
   }
-  body.light #loginCard .login-brand{color:var(--gold-soft);}
-  #loginCard .login-sub{color:var(--text-dim);font-size:13px;margin-bottom:26px;}
-  .login-field{margin-bottom:16px;}
-  .login-field label{display:block;font-size:12.5px;color:var(--text-dim);margin-bottom:6px;font-weight:600;}
+  #loginCard .login-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.20);
+    border-radius:100px;padding:3px 10px 3px 7px;
+    font-size:10.5px;font-weight:600;color:rgba(255,255,255,0.88);
+    letter-spacing:0.04em;text-transform:uppercase;
+    position:relative;z-index:1;margin-top:6px;
+  }
+  #loginCard .login-badge::before{
+    content:'';width:6px;height:6px;border-radius:50%;
+    background:#4ade80;box-shadow:0 0 0 2px rgba(74,222,128,0.3);
+    display:inline-block;
+  }
+  #loginCard .login-sub{
+    color:rgba(255,255,255,0.70);font-size:12.5px;margin-top:8px;
+    position:relative;z-index:1;line-height:1.5;
+  }
+
+  /* Form body */
+  #loginFormBody{
+    padding:28px 32px 28px;
+  }
+
+  .login-field{margin-bottom:18px;}
+  .login-field label{
+    display:block;font-size:12px;color:var(--text-dim);
+    margin-bottom:7px;font-weight:700;
+    letter-spacing:0.04em;text-transform:uppercase;
+  }
   .login-field input{
-    width:100%;padding:12px 14px;border-radius:var(--radius-sm);
-    border:1px solid var(--border-2);background:var(--panel-2);
+    width:100%;padding:11px 14px;border-radius:var(--radius-sm);
+    border:1.5px solid var(--border-2);background:var(--panel-2);
     color:var(--text);font-family:var(--font-body);font-size:14px;
     outline:none;transition:var(--transition);
   }
-  .login-field input:focus{border-color:var(--secondary);box-shadow:0 0 0 3px rgba(0,166,81,0.15);}
+  .login-field input:focus{
+    border-color:var(--secondary);
+    box-shadow:0 0 0 3px rgba(0,166,81,0.14);
+    background:var(--panel);
+  }
   .login-field .pw-wrap{position:relative;}
-  .login-field .pw-wrap input{padding-right:42px;}
+  .login-field .pw-wrap input{padding-right:44px;}
   .pw-toggle{
     position:absolute;top:50%;right:12px;transform:translateY(-50%);
     background:none;border:none;padding:4px;cursor:pointer;
     color:var(--text-faint);display:flex;align-items:center;justify-content:center;
     transition:var(--transition);
   }
-  .pw-toggle:hover{color:var(--text-dim);}
-  .pw-toggle svg{width:18px;height:18px;display:block;}
+  .pw-toggle:hover{color:var(--secondary);}
+  .pw-toggle svg{width:17px;height:17px;display:block;}
   .pw-toggle .eye-off{display:none;}
   .pw-toggle.is-visible .eye-on{display:none;}
   .pw-toggle.is-visible .eye-off{display:block;}
+
   #loginSubmitBtn{
-    width:100%;padding:12px 14px;border:none;border-radius:var(--radius-sm);
-    background:var(--primary);color:#fff;font-weight:700;font-size:14px;
+    width:100%;padding:13px 14px;border:none;border-radius:var(--radius-sm);
+    background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color:#fff;font-weight:700;font-size:14px;letter-spacing:0.02em;
     cursor:pointer;margin-top:6px;transition:var(--transition);
+    box-shadow:0 4px 14px rgba(0,106,63,0.35);
+    position:relative;overflow:hidden;
   }
-  #loginSubmitBtn:hover{background:var(--dark-green);}
+  #loginSubmitBtn::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg, var(--dark-green) 0%, var(--primary) 100%);
+    opacity:0;transition:opacity .22s var(--ease);
+  }
+  #loginSubmitBtn:hover::after{opacity:1;}
+  #loginSubmitBtn span{position:relative;z-index:1;}
   #loginSubmitBtn:disabled{opacity:0.6;cursor:not-allowed;}
+  #loginSubmitBtn:disabled::after{opacity:0;}
+
   #loginError{
-    color:var(--red);font-size:12.5px;margin-top:12px;min-height:16px;
+    color:var(--red);font-size:12.5px;margin-top:10px;min-height:16px;
     text-align:center;
   }
+
+  /* Footer divider inside form */
+  .login-form-footer{
+    border-top:1px solid var(--border);
+    margin-top:18px;padding-top:16px;
+    text-align:center;
+  }
+  .login-form-footer a{
+    color:var(--text-faint);font-size:12px;
+    text-decoration:none;transition:color .2s;
+  }
+  .login-form-footer a:hover{color:var(--secondary);text-decoration:underline;}
+
+  /* ── MIRAQSA card attribution ── */
+  #login-miraqsa-credit{
+    text-align:center;
+    padding:10px 32px 16px;
+    border-top:1px solid var(--border);
+  }
+  #login-miraqsa-credit .lmc-line1{
+    display:block;font-size:10.5px;
+    color:var(--text-faint);font-family:var(--font-body);
+    margin-bottom:2px;letter-spacing:0.01em;
+  }
+  #login-miraqsa-credit .lmc-line2{
+    display:inline-block;font-size:10.5px;font-weight:700;
+    letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--text-faint);text-decoration:none;
+    font-family:var(--font-body);opacity:0.75;
+    transition:opacity .2s, color .2s;
+  }
+  #login-miraqsa-credit .lmc-line2:hover{opacity:1;color:var(--secondary);}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{background:var(--bg);color:var(--text);}
   body{transition:background .3s var(--ease), color .3s var(--ease);}
@@ -1123,36 +1249,81 @@
     .nav-btn{padding:11px 3px;gap:5px;}
   }
   }
+
+  /* ── Per-tab MIRAQSA attribution ── */
+  .tab-miraqsa-credit{
+    text-align:center;
+    padding:18px 16px 22px;
+    margin-top:8px;
+  }
+  .tab-miraqsa-credit .tmc-line1{
+    display:block;font-size:10px;
+    color:var(--text-faint);font-family:var(--font-body);
+    margin-bottom:3px;opacity:0.75;
+  }
+  .tab-miraqsa-credit .tmc-line1 strong{font-weight:600;opacity:1;}
+  .tab-miraqsa-credit .tmc-line2{
+    display:inline-block;font-size:10px;font-weight:700;
+    letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--text-faint);text-decoration:none;
+    font-family:var(--font-body);opacity:0.65;
+    transition:opacity .2s var(--ease), color .2s var(--ease);
+  }
+  .tab-miraqsa-credit .tmc-line2:hover{opacity:1;color:var(--secondary);}
 </style>
 </head>
 <body class="auth-pending">
 
 <div id="loginOverlay">
   <div id="loginCard">
-    <div class="login-brand">CTG South</div>
-    <div class="login-sub">Enterprise Dashboard — প্রবেশ করতে সাইন ইন করুন</div>
-    <form id="loginForm" autocomplete="off">
-      <div class="login-field">
-        <label for="loginEmail">ইউজার আইডি</label>
-        <input type="email" id="loginEmail" placeholder="ইউজার আইডি লিখুন" required autocomplete="username">
+
+    <!-- ── Header stripe ── -->
+    <div id="loginCardHeader">
+      <div id="loginLogoMark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+          <path d="M14 17.5h7M17.5 14v7"/>
+        </svg>
       </div>
-      <div class="login-field">
-        <label for="loginPassword">পাসওয়ার্ড</label>
-        <div class="pw-wrap">
-          <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" required autocomplete="current-password">
-          <button type="button" class="pw-toggle" id="pwToggleBtn" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">
-            <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-6.06M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.3 20.3 0 0 1-3.22 4.46M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-          </button>
+      <div class="login-brand">CTG South</div>
+      <div class="login-badge">Enterprise Dashboard</div>
+      <div class="login-sub">প্রবেশ করতে আপনার আইডি ও পাসওয়ার্ড দিন</div>
+    </div>
+
+    <!-- ── Form body ── -->
+    <div id="loginFormBody">
+      <form id="loginForm" autocomplete="off">
+        <div class="login-field">
+          <label for="loginEmail">ইউজার আইডি</label>
+          <input type="email" id="loginEmail" placeholder="ইউজার আইডি লিখুন" required autocomplete="username">
         </div>
-      </div>
-      <button type="submit" id="loginSubmitBtn">প্রবেশ করুন</button>
-      <div id="loginError"></div>
-      <div id="loginMsg" style="color:var(--secondary);font-size:12.5px;margin-top:10px;text-align:center;min-height:16px;"></div>
-      <div style="text-align:center;margin-top:14px;">
-        <a href="javascript:void(0)" id="forgotPassLink" style="color:var(--text-dim);font-size:12.5px;text-decoration:underline;">পাসওয়ার্ড ভুলে গেছেন?</a>
-      </div>
-    </form>
+        <div class="login-field">
+          <label for="loginPassword">পাসওয়ার্ড</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" required autocomplete="current-password">
+            <button type="button" class="pw-toggle" id="pwToggleBtn" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">
+              <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-6.06M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.3 20.3 0 0 1-3.22 4.46M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="submit" id="loginSubmitBtn"><span>প্রবেশ করুন</span></button>
+        <div id="loginError"></div>
+        <div id="loginMsg" style="color:var(--secondary);font-size:12.5px;margin-top:10px;text-align:center;min-height:16px;"></div>
+        <div class="login-form-footer">
+          <a href="javascript:void(0)" id="forgotPassLink">পাসওয়ার্ড ভুলে গেছেন?</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- MIRAQSA attribution -->
+    <div id="login-miraqsa-credit">
+      <span class="lmc-line1">Designed &amp; Developed by <strong>Saiful Islam</strong></span>
+      <a class="lmc-line2" href="https://miraqsa.com" target="_blank" rel="noopener noreferrer">MIRAQSA — Digital Solutions</a>
+    </div>
+
   </div>
 </div>
 
@@ -6764,6 +6935,22 @@ function renderBpTable(){
   }, 400);
 
 })();
+
+
+  // ── Inject MIRAQSA tab attribution into every view ──
+  (function(){
+    var views = ['view-overview','view-home','view-territories','view-directory',
+      'view-tracker','view-channel','view-analysis','view-partner',
+      'view-base','view-pricelist','view-ylp','view-kpi','view-bypartner'];
+    var html = '<div class="tab-miraqsa-credit">'
+      + '<span class="tmc-line1">Designed &amp; Developed by <strong>Saiful Islam</strong></span>'
+      + '<a class="tmc-line2" href="https://miraqsa.com" target="_blank" rel="noopener noreferrer">MIRAQSA — Digital Solutions</a>'
+      + '</div>';
+    views.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && !el.querySelector('.tab-miraqsa-credit')) el.insertAdjacentHTML('beforeend', html);
+    });
+  })();
 
 
 
