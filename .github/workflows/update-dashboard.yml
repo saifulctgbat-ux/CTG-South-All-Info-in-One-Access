@@ -1,0 +1,40 @@
+name: Update dashboard from Excel
+
+on:
+  push:
+    paths:
+      - "data/*.xlsx"
+      - "scripts/build_dashboard.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-dashboard
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install openpyxl
+      - name: Rebuild data inside index.html
+        run: python scripts/build_dashboard.py
+      - name: Commit updated index.html
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "index.html already up to date"
+
+          else
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Auto-update dashboard data from Excel"
+            git push
+          fi
