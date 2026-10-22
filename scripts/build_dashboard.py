@@ -334,6 +334,21 @@ def bp_groups(rows):
     return out
 
 
+TILL_RE = re.compile(r"Till\s+(\d+(?:st|nd|rd|th)\s+[A-Za-z]+'\d\d)", re.I)
+
+
+def bp_till_dates(rows):
+    """{"Oct'26": "21st Oct'26"} read from headers such as 'Volume Achievement Till 21st Oct'26'."""
+    out = {}
+    for h in rows[1]:
+        m = TILL_RE.search(str(h or ""))
+        if m:
+            mk = month_key(m.group(1).split(" ", 1)[1], short=True)
+            if mk and mk not in out:
+                out[mk] = m.group(1)
+    return out
+
+
 def _r6(v):
     return None if v is None else round(v, 6)
 
@@ -350,6 +365,14 @@ def build_bp(wb):
     months = [m for m in G if not m.startswith("_")]
     # brand order per month (memo target columns)
     brand_cfg = {m: [l for l, _ in G[m]["memo"]["target"]] for m in months if "memo" in G[m]}
+    # Months whose Volume block has NO "Total" column but one column per brand (e.g. Oct'26: B&H, LS)
+    vol_cfg = {}
+    for m in months:
+        vt = G[m].get("volume", {}).get("target")
+        if vt and not vt[0][0].lower().startswith("total"):
+            vol_cfg[m] = [l for l, _ in vt]
+    vol_by_month = {m: {} for m in vol_cfg}
+    till_dates = bp_till_dates(rows)
     records, by_month, split_aug, super_over = [], {m: {} for m in brand_cfg}, {}, {}
     for r in data:
         code = s(r[4])
@@ -366,6 +389,21 @@ def build_bp(wb):
 
             vt, va = first("volume", "target"), first("volume", "ach")
             vp, vs = first("volume", "pct"), first("volume", "status")
+            if m in vol_cfg:                 # brand-wise volume: no single total -> per-brand arrays, record fields blank
+                vg = g["volume"]
+                vtg = [num(r[c]) for _, c in vg["target"]]
+                vac = [num(r[c]) for _, c in vg["ach"]]
+                vpc = [num(r[c]) for _, c in vg.get("pct", [])]
+                vst = [_letter(r[c]) for _, c in vg.get("status", [])]
+                for i in range(len(vtg)):
+                    if i < len(vpc) and vpc[i] is None and vtg[i] and vac[i] is not None:
+                        vpc[i] = vac[i] / vtg[i]
+                    if i < len(vst) and not vst[i] and i < len(vpc) and vpc[i] is not None:
+                        vst[i] = "W" if vpc[i] >= 1 else "F"
+                vflat = [_r6(x) for x in vtg + vac + vpc] + vst
+                if any(x not in (None, "") for x in vflat):
+                    vol_by_month[m][code] = vflat
+                vt = va = vp = vs = None
             rec = dict(base)
             rec["Month"] = m
             def vol(v):                      # number -> number, text such as '-' kept as is, empty -> ''
@@ -417,7 +455,8 @@ def build_bp(wb):
                 super_over[code] = {"target": t, "stt": stt, "remaining": remn, "achPct": ap,
                                     "winnerStatus": "Winner" if ap is not None and ap >= 1 else "Failure"}
     return {"BP_RECORDS_SOURCE": records, "BP_MEMO_SPLIT_AUG": split_aug, "BP_SUPER_OVER": super_over,
-            "BP_MEMO_BY_MONTH": by_month, "BP_MONTH_BRAND_CONFIG": brand_cfg}
+            "BP_MEMO_BY_MONTH": by_month, "BP_MONTH_BRAND_CONFIG": brand_cfg,
+            "BP_VOL_BRAND_CONFIG": vol_cfg, "BP_VOL_BY_MONTH": vol_by_month, "BP_TILL_DATES": till_dates}
 
 
 # ──────────────────────────────────────────────────────────────── JS literal blocks
@@ -460,7 +499,8 @@ def js_pw(rows):
 
 # ──────────────────────────────────────────────────────────────── writer
 JSON_BLOCKS = ["DATA", "TSA_TVA_DATA", "PL_ROWS", "YLP_RAW", "KPI_RECORDS_SOURCE", "BP_RECORDS_SOURCE",
-               "BP_MEMO_SPLIT_AUG", "BP_SUPER_OVER", "BP_MEMO_BY_MONTH", "BP_MONTH_BRAND_CONFIG"]
+               "BP_MEMO_SPLIT_AUG", "BP_SUPER_OVER", "BP_MEMO_BY_MONTH", "BP_MONTH_BRAND_CONFIG",
+               "BP_VOL_BRAND_CONFIG", "BP_VOL_BY_MONTH", "BP_TILL_DATES"]
 DEC = json.JSONDecoder()
 
 
