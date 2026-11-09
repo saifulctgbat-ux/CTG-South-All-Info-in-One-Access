@@ -3,7 +3,7 @@
 ## Goal
 User uploads a new Excel (`data/*.xlsx`) to GitHub → GitHub Action rebuilds the data embedded in `index.html` → dashboard updates. No manual HTML editing.
 
-## Status (as of 2026-10-22): DONE and verified (Oct'26 added to By Partner)
+## Status (as of 2026-11-09): DONE and verified (Oct'26 added to By Partner)
 - `scripts/build_dashboard.py` — rebuilds all 16 embedded data blocks from the workbook. Idempotent (2nd run = "unchanged").
 - `.github/workflows/update-dashboard.yml` — runs the script on push of `data/*.xlsx`, commits `index.html` back.
 - `index.html` — already rebuilt from the current Excel. `data/CTG_South.xlsx` — current Excel.
@@ -27,7 +27,7 @@ User uploads a new Excel (`data/*.xlsx`) to GitHub → GitHub Action rebuilds th
 | ByPartner Target Vs Achievement | `BP_RECORDS_SOURCE`, `BP_MEMO_BY_MONTH`, `BP_MONTH_BRAND_CONFIG`, `BP_MEMO_SPLIT_AUG`, `BP_SUPER_OVER`, `BP_VOL_BRAND_CONFIG`, `BP_VOL_BY_MONTH`, `BP_TILL_DATES` | month keys here are Jan'26…Sep'26 (3 letters). Memo columns in records = first brand (Jan–Jul), B&H+LS sum (Aug), blank (Sep) — copied from how the original HTML behaved |
 
 ## Known limitations / next ideas
-- Hard-coded in the HTML's JS (not data): `PW_MONTHS`, `YLP_MONTHS`/`YLP_MONTH_COLS`, `AUG_TILL_DATE`/`SEP_TILL_DATE`, `bpSuperOver` only for Sep'26, `BP` Oct'26 not present. A NEW month (e.g. Oct'26 in the ByPartner/TVA sheets) is picked up in the data, but the UI may need JS changes to show it.
+- Month handling in the HTML is now fully data-driven (2026-11-09): By Partner / Month Wise Summary / KPI / TSA / Territory / Partner Winner dropdowns and the default (latest) month are all built from the embedded data. A new month (Nov'26 …) needs NO HTML edit. Only intentional one-offs remain: `YLP_MONTHS`/`YLP_MONTH_COLS` (YLP sheet is a fixed Jan–June'26 sheet), `BP_SUPER_OVER_MONTH` (Sep'26 Super Over campaign), the Aug'26 "(Super Over)" display label and `BP_MEMO_SPLIT_AUG`.
 - If the ByPartner sheet gets a new month, check `bp_groups()` header parsing and the Aug/Sep special cases in `build_bp()`.
 - Excel must be saved by Excel (cached formula values). If a formula cell has no cached value the script falls back to computing pct/status for ByPartner only.
 - `index.html` is ~18 MB; each auto-commit adds that to repo history (fine, GitHub limit is 100 MB per file).
@@ -48,4 +48,5 @@ Upload this folder (or the repo), ask: "Read HANDOFF.md and continue". Remaining
 - HTML: Oct'26 added to the By Partner month dropdown (default) and Month Wise Summary dropdown; table shows brand-wise volume columns; summary shows brand-wise Volume winner counts/%.
 - Cells that are #DIV/0! in Excel (brand with zero target) are shown blank.
 - The three `const BP_VOL_*` / `BP_TILL_DATES` statements must exist in index.html (the script only replaces existing blocks).
-- Next month (Nov'26): add `<option value="Nov'26">` to `#bpMonthSel` and `#bpMonthSummarySel`; data is picked up automatically.
+- Next month (Nov'26): nothing to do in the HTML — dropdowns are populated from the data and the latest month becomes the default. (The static `<option>` lists in the HTML are only a pre-load fallback; they are overwritten at runtime.)
+- `TVA_TILL_DATES` (const, `{}` by default) maps month -> "21st Nov'26"-style text for TSA Target-vs-Achievement headers (`achLbl` / `monthHeadline`). Empty = no date shown. It replaces the old `AUG_TILL_DATE`/`SEP_TILL_DATE` constants; the build script can regenerate this single `const` if the TVA sheet headers ever carry a "Till …" date.
