@@ -115,6 +115,8 @@ def build_tva(wb):
             t, st, a = num(r[ct]), num(r[cs]), num(r[ca])
             if t is None and st is None:
                 continue
+            t = t or 0.0    # new month: target present but STT still blank (or vice versa)
+            st = st or 0.0
             months.append({"month": mk, "target": round(t, 2), "stt": round(st, 2),
                            "ach": round((a if a is not None else (st / t if t else 0)) * 100, 2),
                            "status": s(r[cst])})
@@ -137,6 +139,8 @@ def build_data(wb):
             t, st = num(r[ct]), num(r[cs])
             if t is None and st is None:
                 continue
+            t = t or 0.0
+            st = st or 0.0
             ach = round((st / t) * 100, 1) if t else 0
             out.append({"month": mk, "target": round(t, 1), "stt": round(st, 1), "ach": intish(ach),
                         "status": "Target Achieved" if ach >= 100 else "Target Not Achieved"})
